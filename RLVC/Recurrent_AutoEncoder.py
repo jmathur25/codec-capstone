@@ -3,7 +3,8 @@ import numpy as np
 import tensorflow as tf
 import tensorflow_compression as tfc
 import os
-from scipy import misc
+# from scipy import misc
+import imageio as misc
 import CNN_recurrent
 import motion
 import functions

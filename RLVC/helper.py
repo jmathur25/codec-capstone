@@ -1,7 +1,8 @@
 import numpy as np
 import tensorflow as tf
 import os
-from scipy import misc
+# from scipy import misc
+import imageio as misc
 from ms_ssim_np import MultiScaleSSIM
 import arithmeticcoding
 
