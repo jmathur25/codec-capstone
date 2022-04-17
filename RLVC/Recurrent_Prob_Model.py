@@ -11,7 +11,8 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 config = tf.ConfigProto(allow_soft_placement=True, device_count={"GPU": 0})
 sess = tf.Session(config=config)
 
-parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser = argparse.ArgumentParser(
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--path", default="BasketballPass")
 parser.add_argument("--frame", type=int, default=100)
 parser.add_argument("--f_P", type=int, default=6)
@@ -77,19 +78,22 @@ for g in range(GOP_num + 1):
 
         # I frame
         total_bits += (
-            os.path.getsize(path_bin + "f" + str(I_index).zfill(3) + ".bin") * 8
+            os.path.getsize(path_bin + "f" +
+                            str(I_index).zfill(3) + ".bin") * 8
         )
 
         # if there exists forward P frame(s), I_index + 1 is encoded by the bottleneck
         if args.f_P > 0 and I_index + 1 <= args.frame:
             total_bits += (
-                os.path.getsize(path_bin + "f" + str(I_index + 1).zfill(3) + ".bin") * 8
+                os.path.getsize(path_bin + "f" +
+                                str(I_index + 1).zfill(3) + ".bin") * 8
             )
 
         # if there exists backward P frame(s), I_index - 1 is encoded by the bottleneck
         if args.b_P > 0 and I_index - 1 >= 1:
             total_bits += (
-                os.path.getsize(path_bin + "f" + str(I_index - 1).zfill(3) + ".bin") * 8
+                os.path.getsize(path_bin + "f" +
+                                str(I_index - 1).zfill(3) + ".bin") * 8
             )
 
 # start RPM
@@ -111,7 +115,8 @@ for lat in latents:
             # load first prior
             frame_index = g * GOP_size + 2
             prior_value = np.load(
-                path_lat + "/f" + str(frame_index).zfill(3) + "_" + lat + ".npy"
+                path_lat + "/f" +
+                str(frame_index).zfill(3) + "_" + lat + ".npy"
             )
 
             # init state
@@ -124,7 +129,8 @@ for lat in latents:
                 # load latent
                 frame_index = g * GOP_size + f + 3
                 latent_value = np.load(
-                    path_lat + "/f" + str(frame_index).zfill(3) + "_" + lat + ".npy"
+                    path_lat + "/f" +
+                    str(frame_index).zfill(3) + "_" + lat + ".npy"
                 )
 
                 # run RPM
@@ -145,7 +151,8 @@ for lat in latents:
                     print("Frame", frame_index, lat + "_bits =", bits_value)
                 else:
                     total_bits += bits_estimation
-                    print("Frame", frame_index, lat + "_bits =", bits_estimation)
+                    print("Frame", frame_index, lat +
+                          "_bits =", bits_estimation)
 
                 # the latent will be the prior for the next latent
                 prior_value = latent_value
@@ -155,7 +162,8 @@ for lat in latents:
             # load first prior
             frame_index = (g + 1) * GOP_size
             prior_value = np.load(
-                path_lat + "/f" + str(frame_index).zfill(3) + "_" + lat + ".npy"
+                path_lat + "/f" +
+                str(frame_index).zfill(3) + "_" + lat + ".npy"
             )
 
             # init state
@@ -168,7 +176,8 @@ for lat in latents:
                 # load latent
                 frame_index = (g + 1) * GOP_size - f - 1
                 latent_value = np.load(
-                    path_lat + "/f" + str(frame_index).zfill(3) + "_" + lat + ".npy"
+                    path_lat + "/f" +
+                    str(frame_index).zfill(3) + "_" + lat + ".npy"
                 )
 
                 # run RPM
@@ -189,7 +198,8 @@ for lat in latents:
                     print("Frame", frame_index, lat + "_bits =", bits_value)
                 else:
                     total_bits += bits_estimation
-                    print("Frame", frame_index, lat + "_bits =", bits_estimation)
+                    print("Frame", frame_index, lat +
+                          "_bits =", bits_estimation)
 
                 # the latent will be the prior for the next latent
                 prior_value = latent_value
@@ -214,7 +224,8 @@ for lat in latents:
             # load latent
             frame_index = GOP_num * GOP_size + f + 3
             latent_value = np.load(
-                path_lat + "/f" + str(frame_index).zfill(3) + "_" + lat + ".npy"
+                path_lat + "/f" +
+                str(frame_index).zfill(3) + "_" + lat + ".npy"
             )
 
             # run RPM

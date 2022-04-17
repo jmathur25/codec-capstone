@@ -1,5 +1,6 @@
 import tensorflow as tf
 
+
 def convnet(im1_warp, im2, flow, layer):
 
     with tf.variable_scope("flow_cnn_" + str(layer), reuse=tf.AUTO_REUSE):
@@ -14,7 +15,7 @@ def convnet(im1_warp, im2, flow, layer):
                                  activation=tf.nn.relu)
         conv4 = tf.layers.conv2d(inputs=conv3, filters=16, kernel_size=[7, 7], padding="same",
                                  activation=tf.nn.relu)
-        conv5 = tf.layers.conv2d(inputs=conv4, filters=2 , kernel_size=[7, 7], padding="same",
+        conv5 = tf.layers.conv2d(inputs=conv4, filters=2, kernel_size=[7, 7], padding="same",
                                  activation=None)
 
     return conv5
@@ -22,7 +23,8 @@ def convnet(im1_warp, im2, flow, layer):
 
 def loss(flow_course, im1, im2, layer):
 
-    flow = tf.image.resize_images(flow_course, [tf.shape(im1)[1], tf.shape(im2)[2]])
+    flow = tf.image.resize_images(
+        flow_course, [tf.shape(im1)[1], tf.shape(im2)[2]])
     im1_warped = tf.contrib.image.dense_image_warp(im1, flow)
     res = convnet(im1_warped, im2, flow, layer)
     flow_fine = res + flow
@@ -35,15 +37,23 @@ def loss(flow_course, im1, im2, layer):
 
 def optical_flow(im1_4, im2_4, batch, h, w):
 
-    im1_3 = tf.layers.average_pooling2d(im1_4, pool_size=2, strides=2, padding='same')
-    im1_2 = tf.layers.average_pooling2d(im1_3, pool_size=2, strides=2, padding='same')
-    im1_1 = tf.layers.average_pooling2d(im1_2, pool_size=2, strides=2, padding='same')
-    im1_0 = tf.layers.average_pooling2d(im1_1, pool_size=2, strides=2, padding='same')
+    im1_3 = tf.layers.average_pooling2d(
+        im1_4, pool_size=2, strides=2, padding='same')
+    im1_2 = tf.layers.average_pooling2d(
+        im1_3, pool_size=2, strides=2, padding='same')
+    im1_1 = tf.layers.average_pooling2d(
+        im1_2, pool_size=2, strides=2, padding='same')
+    im1_0 = tf.layers.average_pooling2d(
+        im1_1, pool_size=2, strides=2, padding='same')
 
-    im2_3 = tf.layers.average_pooling2d(im2_4, pool_size=2, strides=2, padding='same')
-    im2_2 = tf.layers.average_pooling2d(im2_3, pool_size=2, strides=2, padding='same')
-    im2_1 = tf.layers.average_pooling2d(im2_2, pool_size=2, strides=2, padding='same')
-    im2_0 = tf.layers.average_pooling2d(im2_1, pool_size=2, strides=2, padding='same')
+    im2_3 = tf.layers.average_pooling2d(
+        im2_4, pool_size=2, strides=2, padding='same')
+    im2_2 = tf.layers.average_pooling2d(
+        im2_3, pool_size=2, strides=2, padding='same')
+    im2_1 = tf.layers.average_pooling2d(
+        im2_2, pool_size=2, strides=2, padding='same')
+    im2_0 = tf.layers.average_pooling2d(
+        im2_1, pool_size=2, strides=2, padding='same')
 
     flow_zero = tf.zeros([batch, h//16, w//16, 2])
 
@@ -54,4 +64,3 @@ def optical_flow(im1_4, im2_4, batch, h, w):
     loss_4, flow_4 = loss(flow_3, im1_4, im2_4, 4)
 
     return flow_4, loss_0, loss_1, loss_2, loss_3, loss_4
-

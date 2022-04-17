@@ -71,7 +71,8 @@ def configure_decoder(args):
     path = args.path + "/"
     path_com = args.path + "_" + args.mode + "_" + str(args.l) + "/frames_dec/"
     path_bin = args.path + "_" + args.mode + "_" + str(args.l) + "/bitstreams/"
-    path_lat = args.path + "_" + args.mode + "_" + str(args.l) + "/latents_dec/"
+    path_lat = args.path + "_" + args.mode + \
+        "_" + str(args.l) + "/latents_dec/"
 
     os.makedirs(path_com, exist_ok=True)
     os.makedirs(path_lat, exist_ok=True)
@@ -87,19 +88,22 @@ def configure_decoder(args):
 def encode_I(args, frame_index, I_level, path, path_com, path_bin):
 
     if args.mode == "PSNR":
-        os.system(
-            "bpgenc -f 444 -m 9 " + path + "f" + str(frame_index).zfill(3) + ".png "
+        if os.system(
+            "bpgenc -f 444 -m 9 " + path + "f" +
+                str(frame_index).zfill(3) + ".png "
             "-o "
             + path_bin
             + "f"
             + str(frame_index).zfill(3)
             + ".bin -q "
             + str(I_level)
-        )
-        os.system(
+        ) != 0:
+            raise ValueError('Failed to encode!')
+        if os.system(
             "bpgdec " + path_bin + "f" + str(frame_index).zfill(3) + ".bin "
             "-o " + path_com + "f" + str(frame_index).zfill(3) + ".png"
-        )
+        ) != 0:
+            raise ValueError('Failed to decode!')
 
     elif args.mode == "MS-SSIM":
         os.system(
@@ -143,7 +147,8 @@ def encode_I(args, frame_index, I_level, path, path_com, path_bin):
     F0_raw = np.expand_dims(F0_raw, axis=0)
 
     if args.metric == "PSNR":
-        mse = np.mean(np.power(np.subtract(F0_com / 255.0, F0_raw / 255.0), 2.0))
+        mse = np.mean(np.power(np.subtract(
+            F0_com / 255.0, F0_raw / 255.0), 2.0))
         quality = 10 * np.log10(1.0 / mse)
     elif args.metric == "MS-SSIM":
         quality = MultiScaleSSIM(F0_com, F0_raw, max_val=255)
@@ -240,7 +245,8 @@ def entropy_decoding(frame_index, lat, path_bin, path_lat, sigma, mu):
 
     bitin.close()
 
-    np.save(path_lat + "/f" + str(frame_index).zfill(3) + "_" + lat + ".npy", latent)
+    np.save(path_lat + "/f" + str(frame_index).zfill(3) +
+            "_" + lat + ".npy", latent)
     print("Decoded latent_" + lat + " frame", frame_index)
 
     return latent
