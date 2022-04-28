@@ -14,8 +14,7 @@ import helper
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
-parser = argparse.ArgumentParser(
-    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--path", default="BasketballPass")
 parser.add_argument("--frame", type=int, default=100)
 parser.add_argument("--f_P", type=int, default=6)
@@ -29,25 +28,25 @@ parser.add_argument(
 )
 parser.add_argument("--N", type=int, default=128, choices=[128])
 parser.add_argument("--M", type=int, default=128, choices=[128])
-parser.add_argument("--debug", action='store_true')
-parser.add_argument("--cpu", action='store_true')
+parser.add_argument("--debug", action="store_true")
+parser.add_argument("--cpu", action="store_true")
 
 args = parser.parse_args()
 
 if args.cpu:
-    print('Making CPU config...')
+    print("Making CPU config...")
     config = tf.ConfigProto(allow_soft_placement=True, device_count={"GPU": 0})
 else:
-    print('Making GPU config')
+    print("Making GPU config")
     config = tf.ConfigProto(allow_soft_placement=True)
 sess = tf.Session(config=config)
 if args.debug:
-    print('Running debug mode')
+    print("Running debug mode")
     sess = tf_debug.LocalCLIDebugWrapperSession(sess)
 if not args.cpu:
-    print('Testing GPU...')
+    print("Testing GPU...")
     has_gpu = tf.test.is_gpu_available()
-    print('Result:', has_gpu)
+    print("Result:", has_gpu)
 
 # Settings
 (
@@ -201,9 +200,9 @@ elif args.metric == "MS-SSIM":
 # load model
 saver = tf.train.Saver(max_to_keep=None)
 model_path = "./model/RAE_" + args.mode + "_" + str(args.l)
-print('Loading model...')
+print("Loading model...")
 saver.restore(sess, save_path=model_path + "/model.ckpt")
-print('Loaded!')
+print("Loaded!")
 
 # init quality
 quality_frame = np.zeros([args.frame])
@@ -215,7 +214,7 @@ quality_frame[frame_index - 1] = quality
 
 # encode GOPs
 for g in range(GOP_num):
-    print('GOP:', g)
+    print("GOP:", g)
 
     # forward P frames
 
@@ -225,7 +224,7 @@ for g in range(GOP_num):
     F0_com = np.expand_dims(F0_com, axis=0)
 
     for f in range(args.f_P):
-        print('Encoding F:', f)
+        print("Encoding F:", f)
 
         # load P frame (raw)
         frame_index = g * GOP_size + f + 2
@@ -246,7 +245,7 @@ for g in range(GOP_num):
             flag = True
 
         # run RAE
-        print('Calling RAE')
+        print("Calling RAE")
         (
             F0_com,
             string_MV,
@@ -272,11 +271,11 @@ for g in range(GOP_num):
                 RPM_flag: flag,
             },
         )
-        print('Got results')
-        print('latent_mv:\n', latent_mv)
-        print('latent_res:\n', latent_res)
-        print('h_state:\n', h_state)
-        raise ValueError('Exiting')
+        print("Got results")
+        print("latent_mv:\n", latent_mv)
+        print("latent_res:\n", latent_res)
+        print("h_state:\n", h_state)
+        raise ValueError("Exiting")
 
         F0_com = F0_com * 255
 
@@ -293,8 +292,7 @@ for g in range(GOP_num):
             np.uint8(np.round(F0_com[0])),
         )
         np.save(path_lat + "/f" + str(frame_index).zfill(3) + "_mv.npy", latent_mv)
-        np.save(path_lat + "/f" + str(frame_index).zfill(3) +
-                "_res.npy", latent_res)
+        np.save(path_lat + "/f" + str(frame_index).zfill(3) + "_res.npy", latent_res)
 
         quality_frame[frame_index - 1] = quality
 
@@ -302,8 +300,7 @@ for g in range(GOP_num):
 
     # encode the next I frame
     frame_index = (g + 1) * GOP_size + 1
-    quality = helper.encode_I(
-        args, frame_index, I_level, path, path_com, path_bin)
+    quality = helper.encode_I(args, frame_index, I_level, path, path_com, path_bin)
     quality_frame[frame_index - 1] = quality
 
     # backward P frames
@@ -373,8 +370,7 @@ for g in range(GOP_num):
             np.uint8(np.round(F0_com[0])),
         )
         np.save(path_lat + "/f" + str(frame_index).zfill(3) + "_mv.npy", latent_mv)
-        np.save(path_lat + "/f" + str(frame_index).zfill(3) +
-                "_res.npy", latent_res)
+        np.save(path_lat + "/f" + str(frame_index).zfill(3) + "_res.npy", latent_res)
 
         quality_frame[frame_index - 1] = quality
 
