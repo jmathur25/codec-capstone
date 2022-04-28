@@ -1,0 +1,14 @@
+*.pyc
+.vscode/
+*.bin
+*.png
+*.so
+build/
+
+*.pt
+*.pth
+.ipynb_checkpoints/
+checkpoints/
+dcvc-b-frame*/
+recon_bin_folder_psnr/
+wandb/
