@@ -1,0 +1,11 @@
+*.pyc
+.vscode/
+*.bin
+*.png
+*.so
+build/
+checkpoints/
+recon_bin_folder_psnr/
+*.pt
+*.pth
+
