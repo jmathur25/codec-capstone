@@ -395,7 +395,6 @@ class DCVC_net(nn.Module):
         if compress_type == "full":
             outputs = self.quantize(feature, "dequantize", mean)
         else:
-            # training will do this
             outputs = feature
         values = outputs - mean
         mu = torch.zeros_like(sigma)
@@ -760,30 +759,30 @@ class DCVC_net(nn.Module):
             torch.cat((recon_image_feature, context1, context2), dim=1)
         )
 
-        if compress_type in ["no_compress", "train_compress"]:
-            total_bits_y, _ = self.feature_probs_based_sigma(
-                compressed_y_renorm, means_hat, scales_hat, compress_type
-            )
-        else:
-            total_bits_y, _ = self.feature_probs_based_sigma(
-                feature_renorm, means_hat, scales_hat, compress_type
-            )
-        if compress_type in ["no_compress", "train_compress"]:
-            total_bits_mv1, _ = self.feature_probs_based_sigma(
-                quant_mv1, means_hat_mv1, scales_hat_mv1, compress_type
-            )
-        else:
-            total_bits_mv1, _ = self.feature_probs_based_sigma(
-                mvfeature1, means_hat_mv1, scales_hat_mv1, compress_type
-            )
-        if compress_type in ["no_compress", "train_compress"]:
-            total_bits_mv2, _ = self.feature_probs_based_sigma(
-                quant_mv2, means_hat_mv2, scales_hat_mv2, compress_type
-            )
-        else:
-            total_bits_mv2, _ = self.feature_probs_based_sigma(
-                mvfeature2, means_hat_mv2, scales_hat_mv2, compress_type
-            )
+        # if compress_type in ["no_compress", "train_compress"]:
+        #     total_bits_y, _ = self.feature_probs_based_sigma(
+        #         compressed_y_renorm, means_hat, scales_hat, compress_type
+        #     )
+        # else:
+        total_bits_y, _ = self.feature_probs_based_sigma(
+            feature_renorm, means_hat, scales_hat, compress_type
+        )
+        # if compress_type in ["no_compress", "train_compress"]:
+        #     total_bits_mv1, _ = self.feature_probs_based_sigma(
+        #         quant_mv1, means_hat_mv1, scales_hat_mv1, compress_type
+        #     )
+        # else:
+        total_bits_mv1, _ = self.feature_probs_based_sigma(
+            mvfeature1, means_hat_mv1, scales_hat_mv1, compress_type
+        )
+        # if compress_type in ["no_compress", "train_compress"]:
+        #     total_bits_mv2, _ = self.feature_probs_based_sigma(
+        #         quant_mv2, means_hat_mv2, scales_hat_mv2, compress_type
+        #     )
+        # else:
+        total_bits_mv2, _ = self.feature_probs_based_sigma(
+            mvfeature2, means_hat_mv2, scales_hat_mv2, compress_type
+        )
 
         total_bits_z, _ = self.iclr18_estrate_bits_z(compressed_z)
         total_bits_z_mv1, _ = self.iclr18_estrate_bits_z_mv(compressed_z_mv1)
