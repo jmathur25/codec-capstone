@@ -692,10 +692,15 @@ class DCVC_net(nn.Module):
             z_mv2 = self.mvpriorEncoder(mvfeature2)
             compressed_z_mv1 = torch.round(z_mv1)
             compressed_z_mv2 = torch.round(z_mv2)
+            # compressed_z_mv1 = self.train_quantize(z_mv1)
+            # compressed_z_mv2 = self.train_quantize(z_mv2)
             params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
             params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
+            # PROBLEM:
             quant_mv1 = torch.round(mvfeature1)
             quant_mv2 = torch.round(mvfeature2)
+            # quant_mv1 = self.train_quantize(mvfeature1)
+            # quant_mv2 = self.train_quantize(mvfeature2)
         else:
             raise ValueError("Unknown compress type", compress_type)
 
