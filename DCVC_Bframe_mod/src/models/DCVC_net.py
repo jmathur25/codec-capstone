@@ -383,19 +383,23 @@ class DCVC_net(nn.Module):
         # Simulates quantization by adding uniform noise [-0.5, 0.5]
         return x + torch.rand(x.shape).to(x.device) - 0.5
 
-    def quantize(self, inputs, mode, means):
+    def quantize(self, inputs, mode, means, compress_type):
         assert mode == "dequantize"
-        outputs = inputs.clone()
-        outputs -= means
-        outputs = torch.round(outputs)
-        outputs += means
-        return outputs
+        if compress_type == "no_compress":
+            return inputs
+        elif compress_type == "train_compress":
+            return self.train_quantize(inputs)
+        elif compress_type == "full":
+            outputs = inputs.clone()
+            outputs -= means
+            outputs = torch.round(outputs)
+            outputs += means
+            return outputs
+        else:
+            raise ValueError("Unknown compress type", compress_type)
 
     def feature_probs_based_sigma(self, feature, mean, sigma, compress_type):
-        if compress_type == "full":
-            outputs = self.quantize(feature, "dequantize", mean)
-        else:
-            outputs = feature
+        outputs = self.quantize(feature, "dequantize", mean, compress_type)
         values = outputs - mean
         mu = torch.zeros_like(sigma)
         sigma = sigma.clamp(1e-5, 1e10)
