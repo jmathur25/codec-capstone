@@ -36,8 +36,17 @@ class DCVC_net(nn.Module):
 
         self.gaussian_encoder = GaussianEncoder()
 
+        # self.mvEncoder = nn.Sequential(
+        #     nn.Conv2d(2, out_channel_mv, 3, stride=2, padding=1),
+        #     GDN(out_channel_mv),
+        #     nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=2, padding=1),
+        #     GDN(out_channel_mv),
+        #     nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=2, padding=1),
+        #     GDN(out_channel_mv),
+        #     nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=2, padding=1),
+        # )
         self.mvEncoder = nn.Sequential(
-            nn.Conv2d(2, out_channel_mv, 3, stride=2, padding=1),
+            nn.Conv2d(4, out_channel_mv, 3, stride=2, padding=1),
             GDN(out_channel_mv),
             nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=2, padding=1),
             GDN(out_channel_mv),
@@ -63,7 +72,7 @@ class DCVC_net(nn.Module):
                 GDN(out_channel_mv, inverse=True),
                 nn.Upsample(scale_factor=2, mode="bilinear"),
                 nn.ReflectionPad2d(1),
-                nn.Conv2d(out_channel_mv, 2, 3, stride=1, padding=0),
+                nn.Conv2d(out_channel_mv, 4, 3, stride=1, padding=0),
             )
         elif up_strategy == "mod_convtranspose2d":
             self.mvDecoder_part1 = nn.Sequential(
@@ -95,7 +104,7 @@ class DCVC_net(nn.Module):
                 ),
                 GDN(out_channel_mv, inverse=True),
                 nn.ConvTranspose2d(
-                    out_channel_mv, 2, 4, stride=2, padding=1, output_padding=0
+                    out_channel_mv, 4, 4, stride=2, padding=1, output_padding=0
                 ),
             )
         elif up_strategy == "default":
@@ -128,14 +137,14 @@ class DCVC_net(nn.Module):
                 ),
                 GDN(out_channel_mv, inverse=True),
                 nn.ConvTranspose2d(
-                    out_channel_mv, 2, 3, stride=2, padding=1, output_padding=1
+                    out_channel_mv, 4, 3, stride=2, padding=1, output_padding=1
                 ),
             )
         else:
             raise ValueError("Unhandled up strategy", up_strategy)
 
         self.mvDecoder_part2 = nn.Sequential(
-            nn.Conv2d(5, 64, 3, stride=1, padding=1),
+            nn.Conv2d(4 + 3 + 3, 64, 3, stride=1, padding=1),
             nn.LeakyReLU(negative_slope=0.1),
             nn.Conv2d(64, 64, 3, stride=1, padding=1),
             nn.LeakyReLU(negative_slope=0.1),
@@ -147,7 +156,7 @@ class DCVC_net(nn.Module):
             nn.LeakyReLU(negative_slope=0.1),
             nn.Conv2d(64, 64, 3, stride=1, padding=1),
             nn.LeakyReLU(negative_slope=0.1),
-            nn.Conv2d(64, 2, 3, stride=1, padding=1),
+            nn.Conv2d(64, 4, 3, stride=1, padding=1),
         )
 
         self.contextualEncoder = nn.Sequential(
@@ -376,8 +385,8 @@ class DCVC_net(nn.Module):
 
         return context
 
-    def mv_refine(self, ref, mv):
-        return self.mvDecoder_part2(torch.cat((mv, ref), 1)) + mv
+    def mv_refine(self, ref1, ref2, mv):
+        return self.mvDecoder_part2(torch.cat((mv, ref1, ref2), 1)) + mv
 
     def train_quantize(self, x):
         # Simulates quantization by adding uniform noise [-0.5, 0.5]
@@ -675,6 +684,8 @@ class DCVC_net(nn.Module):
 
         # mvfeature1 = self.mvEncoder(estmv1)
         # mvfeature2 = self.mvEncoder(estmv2)
+        estmv1, estmv2 = torch.chunk(estmv, chunks=2, dim=0)
+        estmv = torch.cat([estmv1, estmv2], dim=1)
         mvfeatures = self.mvEncoder(estmv)
 
         if compress_type == "no_compress":
@@ -737,7 +748,22 @@ class DCVC_net(nn.Module):
         # quant_mv_upsample_refine1 = self.mv_refine(referframe1, quant_mv_upsample1)
         # quant_mv_upsample_refine2 = self.mv_refine(referframe2, quant_mv_upsample2)
         quant_mv_upsample = self.mvDecoder_part1(quant_mv)
-        quant_mv_upsample_refine = self.mv_refine(references, quant_mv_upsample)
+        quant_mv_upsample_refine = self.mv_refine(
+            referframe1, referframe2, quant_mv_upsample
+        )
+
+        # context1 = self.motioncompensation(referframe1, quant_mv_upsample_refine1)
+        # context2 = self.motioncompensation(referframe2, quant_mv_upsample_refine2)
+        # move to batch dimension for parallel processing
+        # TODO: it actually might be faster to just call self.motioncompensation twice
+        # first with (referframe1, quant_mv_upsample_refine[:,:2]
+        # and then with (referframe2, quant_mv_upsample_refine[:,2:])
+        quant_mv_upsample_refine1, quant_mv_upsample_refine2 = torch.chunk(
+            quant_mv_upsample_refine, chunks=2, dim=1
+        )
+        quant_mv_upsample_refine = torch.cat(
+            [quant_mv_upsample_refine1, quant_mv_upsample_refine2], dim=0
+        )
 
         # context1 = self.motioncompensation(referframe1, quant_mv_upsample_refine1)
         # context2 = self.motioncompensation(referframe2, quant_mv_upsample_refine2)
