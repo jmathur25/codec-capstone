@@ -4,8 +4,3 @@
 *.png
 *.so
 build/
-*.tar
-recon_bin_folder_psnr/
-*.pt
-*.pth
-

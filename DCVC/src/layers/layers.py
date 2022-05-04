@@ -38,8 +38,8 @@ class MaskedConv2d(nn.Conv2d):
 
         self.register_buffer("mask", torch.ones_like(self.weight.data))
         _, _, h, w = self.mask.size()
-        self.mask[:, :, h // 2, w // 2 + (mask_type == "B") :] = 0
-        self.mask[:, :, h // 2 + 1 :] = 0
+        self.mask[:, :, h // 2, w // 2 + (mask_type == "B"):] = 0
+        self.mask[:, :, h // 2 + 1:] = 0
 
     def forward(self, x):
         # TODO(begaintj): weight assigment is not supported by torchscript
@@ -55,7 +55,7 @@ def conv3x3(in_ch, out_ch, stride=1):
 def subpel_conv3x3(in_ch, out_ch, r=1):
     """3x3 sub-pixel convolution for up-sampling."""
     return nn.Sequential(
-        nn.Conv2d(in_ch, out_ch * r**2, kernel_size=3, padding=1), nn.PixelShuffle(r)
+        nn.Conv2d(in_ch, out_ch * r ** 2, kernel_size=3, padding=1), nn.PixelShuffle(r)
     )
 
 

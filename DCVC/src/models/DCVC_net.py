@@ -478,26 +478,14 @@ class DCVC_net(nn.Module):
 
         return recon_image
 
-    def train_quantize(self, x):
-        # Simulates quantization by adding uniform noise [-0.5, 0.5]
-        return x + torch.rand(x.shape).to(x.device) - 0.5
-
-    def forward(self, referframe, input_image, compress=True):
+    def forward(self, referframe, input_image):
         estmv = self.opticFlow(input_image, referframe)
         mvfeature = self.mvEncoder(estmv)
         z_mv = self.mvpriorEncoder(mvfeature)
-        if compress:
-            compressed_z_mv = torch.round(z_mv)
-            # compressed_z_mv = self.train_quantize(z_mv)
-        else:
-            compressed_z_mv = z_mv
+        compressed_z_mv = torch.round(z_mv)
         params_mv = self.mvpriorDecoder(compressed_z_mv)
 
-        if compress:
-            quant_mv = torch.round(mvfeature)
-            # quant_mv = self.train_quantize(mvfeature)
-        else:
-            quant_mv = mvfeature
+        quant_mv = torch.round(mvfeature)
 
         ctx_params_mv = self.auto_regressive_mv(quant_mv)
         gaussian_params_mv = self.entropy_parameters_mv(
@@ -515,20 +503,12 @@ class DCVC_net(nn.Module):
 
         feature = self.contextualEncoder(torch.cat((input_image, context), dim=1))
         z = self.priorEncoder(feature)
-        if compress:
-            compressed_z = torch.round(z)
-            # compressed_z = self.train_quantize(z)
-        else:
-            compressed_z = z
+        compressed_z = torch.round(z)
         params = self.priorDecoder(compressed_z)
 
         feature_renorm = feature
 
-        if compress:
-            compressed_y_renorm = torch.round(feature_renorm)
-            # compressed_y_renorm = self.train_quantize(feature_renorm)
-        else:
-            compressed_y_renorm = feature_renorm
+        compressed_y_renorm = torch.round(feature_renorm)
 
         ctx_params = self.auto_regressive(compressed_y_renorm)
         gaussian_params = self.entropy_parameters(

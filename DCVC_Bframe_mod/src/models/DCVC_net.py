@@ -379,16 +379,29 @@ class DCVC_net(nn.Module):
     def mv_refine(self, ref, mv):
         return self.mvDecoder_part2(torch.cat((mv, ref), 1)) + mv
 
-    def train_quantize(self, x):
-        # Simulates quantization by adding uniform noise [-0.5, 0.5]
-        return x + torch.rand(x.shape).to(x.device) - 0.5
+    def train_quantize(self, x, style="add"):
+        assert style in ["add", "mult", "uniform"]
+        if style == "add":
+            # makes x rounded but keeps gradient in additive fashion
+            diff = torch.round(x) - x.detach()
+            return diff + x
+        elif style == "mult":
+            # makes x rounded but keeps gradient in multiplicative fashion
+            mult = torch.round(x) / x.detach()
+            return mult * x
+        elif style == "uniform":
+            # Simulates quantization by adding uniform noise [-0.5, 0.5]
+            return x + torch.rand(x.shape).to(x.device) - 0.5
+        else:
+            raise ValueError("Unhandled style", style)
 
     def quantize(self, inputs, mode, means, compress_type):
         assert mode == "dequantize"
         if compress_type == "no_compress":
             return inputs
         elif compress_type == "train_compress":
-            return self.train_quantize(inputs)
+            return torch.round(inputs - means) + means.detach()
+            # return self.train_quantize(inputs)
         elif compress_type == "full":
             outputs = inputs.clone()
             outputs -= means
@@ -401,6 +414,7 @@ class DCVC_net(nn.Module):
     def feature_probs_based_sigma(self, feature, mean, sigma, compress_type):
         # outputs = self.quantize(feature, "dequantize", mean, compress_type)
         values = feature - mean
+        # values = outputs - mean
         mu = torch.zeros_like(sigma)
         sigma = sigma.clamp(1e-5, 1e10)
         gaussian = torch.distributions.laplace.Laplace(mu, sigma)
@@ -700,19 +714,19 @@ class DCVC_net(nn.Module):
             # quant_mv2 = self.train_quantize(mvfeature2)
             quant_mv = self.train_quantize(mvfeatures)
         elif compress_type == "full":
-            z_mv1 = self.mvpriorEncoder(mvfeature1)
-            z_mv2 = self.mvpriorEncoder(mvfeature2)
-            compressed_z_mv1 = torch.round(z_mv1)
-            compressed_z_mv2 = torch.round(z_mv2)
-            # compressed_z_mv1 = self.train_quantize(z_mv1)
-            # compressed_z_mv2 = self.train_quantize(z_mv2)
-            params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
-            params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
+            # z_mv1 = self.mvpriorEncoder(mvfeature1)
+            # z_mv2 = self.mvpriorEncoder(mvfeature2)
+            z_mv = self.mvpriorEncoder(mvfeatures)
+            # compressed_z_mv1 = torch.round(z_mv1)
+            # compressed_z_mv2 = torch.round(z_mv2)
+            compressed_z_mv = torch.round(z_mv)
+            # params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
+            # params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
+            params_mv = self.mvpriorDecoder(compressed_z_mv)
             # PROBLEM:
-            quant_mv1 = torch.round(mvfeature1)
-            quant_mv2 = torch.round(mvfeature2)
-            # quant_mv1 = self.train_quantize(mvfeature1)
-            # quant_mv2 = self.train_quantize(mvfeature2)
+            # quant_mv1 = torch.round(mvfeature1)
+            # quant_mv2 = torch.round(mvfeature2)
+            quant_mv = self.train_quantize(mvfeatures)
         else:
             raise ValueError("Unknown compress type", compress_type)
 
@@ -726,6 +740,11 @@ class DCVC_net(nn.Module):
         #     torch.cat((params_mv2, ctx_params_mv2), dim=1)
         # )
         # means_hat_mv2, scales_hat_mv2 = gaussian_params_mv2.chunk(2, 1)
+
+        # IRL: feature_hat = round(feature - mean) + mean
+        # mean is calculated autoregressively on previous feature_hats and params
+        # simulate with self.train_quantize(feature - mean) + mean, which is just
+        # equal to feature_hat = self.train_quantize(mean)
         ctx_params_mv = self.auto_regressive_mv(quant_mv)
         gaussian_params_mv = self.entropy_parameters_mv(
             torch.cat((params_mv, ctx_params_mv), dim=1)
@@ -769,10 +788,21 @@ class DCVC_net(nn.Module):
             compressed_z = torch.round(z)
             params = self.priorDecoder(compressed_z)
             feature_renorm = feature
-            compressed_y_renorm = torch.round(feature_renorm)
+            # in reality we need to use the autoregressive network to estimate
+            # the mean/std and then compress torch.round(feature-mean) but
+            # that would be expensive (that is done in compress_ar). Instead,
+            # we just add noise as that simulates the affect. Note that
+            # rounding feature_norm is not correct because it is integer
+            # deltas off the mean/std.
+            # compressed_y_renorm = torch.round(feature_renorm)
+            compressed_y_renorm = self.train_quantize(feature_renorm)
         else:
             raise ValueError("Unknown compress type", compress_type)
 
+        # IRL: feature_hat = round(feature - mean) + mean
+        # mean is calculated autoregressively on previous feature_hats and params
+        # simulate with self.train_quantize(feature - mean) + mean, which is just
+        # equal to feature_hat = self.train_quantize(mean)
         ctx_params = self.auto_regressive(compressed_y_renorm)
         gaussian_params = self.entropy_parameters(
             torch.cat((temporal_prior_params, params, ctx_params), dim=1)
@@ -784,14 +814,9 @@ class DCVC_net(nn.Module):
             torch.cat((recon_image_feature, context1, context2), dim=1)
         )
 
-        if compress_type in ["train_compress", "full"]:
-            total_bits_y, _ = self.feature_probs_based_sigma(
-                compressed_y_renorm, means_hat, scales_hat, compress_type
-            )
-        else:
-            total_bits_y, _ = self.feature_probs_based_sigma(
-                feature_renorm, means_hat, scales_hat, compress_type
-            )
+        total_bits_y, _ = self.feature_probs_based_sigma(
+            compressed_y_renorm, means_hat, scales_hat, compress_type
+        )
         # if compress_type in ["train_compress", "full"]:
         #     total_bits_mv1, _ = self.feature_probs_based_sigma(
         #         quant_mv1, means_hat_mv1, scales_hat_mv1, compress_type
@@ -808,14 +833,9 @@ class DCVC_net(nn.Module):
         #     total_bits_mv2, _ = self.feature_probs_based_sigma(
         #         mvfeature2, means_hat_mv2, scales_hat_mv2, compress_type
         #     )
-        if compress_type in ["train_compress", "full"]:
-            total_bits_mv, _ = self.feature_probs_based_sigma(
-                quant_mv, means_hat_mv, scales_hat_mv, compress_type
-            )
-        else:
-            total_bits_mv1, _ = self.feature_probs_based_sigma(
-                mvfeature1, means_hat_mv1, scales_hat_mv1, compress_type
-            )
+        total_bits_mv, _ = self.feature_probs_based_sigma(
+            quant_mv, means_hat_mv, scales_hat_mv, compress_type
+        )
 
         total_bits_z, _ = self.iclr18_estrate_bits_z(compressed_z)
         # total_bits_z_mv1, _ = self.iclr18_estrate_bits_z_mv(compressed_z_mv1)

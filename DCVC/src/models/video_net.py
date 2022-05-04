@@ -27,9 +27,12 @@ class LowerBound(Function):
 
 
 class GDN(nn.Module):
-    def __init__(
-        self, ch, inverse=False, beta_min=1e-6, gamma_init=0.1, reparam_offset=2**-18
-    ):
+    def __init__(self,
+                 ch,
+                 inverse=False,
+                 beta_min=1e-6,
+                 gamma_init=0.1,
+                 reparam_offset=2**-18):
         super(GDN, self).__init__()
         self.inverse = inverse
         self.beta_min = beta_min
@@ -40,14 +43,14 @@ class GDN(nn.Module):
 
     def build(self, ch):
         self.pedestal = self.reparam_offset**2
-        self.beta_bound = (self.beta_min + self.reparam_offset**2) ** 0.5
+        self.beta_bound = ((self.beta_min + self.reparam_offset**2)**0.5)
         self.gamma_bound = self.reparam_offset
 
-        beta = torch.sqrt(torch.ones(ch) + self.pedestal)
+        beta = torch.sqrt(torch.ones(ch)+self.pedestal)
         self.beta = nn.Parameter(beta)
 
         eye = torch.eye(ch)
-        g = self.gamma_init * eye
+        g = self.gamma_init*eye
         g = g + self.pedestal
         gamma = torch.sqrt(g)
 
@@ -59,7 +62,7 @@ class GDN(nn.Module):
         if inputs.dim() == 5:
             unfold = True
             bs, ch, d, w, h = inputs.size()
-            inputs = inputs.view(bs, ch, d * w, h)
+            inputs = inputs.view(bs, ch, d*w, h)
 
         _, ch, _, _ = inputs.size()
 
@@ -88,71 +91,43 @@ class GDN(nn.Module):
 
 
 def torch_warp(tensorInput, tensorFlow):
-    if tensorInput.device == torch.device("cpu"):
+    if tensorInput.device == torch.device('cpu'):
         if str(tensorFlow.size()) not in Backward_tensorGrid_cpu:
-            tensorHorizontal = (
-                torch.linspace(-1.0, 1.0, tensorFlow.size(3))
-                .view(1, 1, 1, tensorFlow.size(3))
-                .expand(tensorFlow.size(0), -1, tensorFlow.size(2), -1)
-            )
-            tensorVertical = (
-                torch.linspace(-1.0, 1.0, tensorFlow.size(2))
-                .view(1, 1, tensorFlow.size(2), 1)
-                .expand(tensorFlow.size(0), -1, -1, tensorFlow.size(3))
-            )
+            tensorHorizontal = torch.linspace(-1.0, 1.0, tensorFlow.size(3)).view(
+                1, 1, 1, tensorFlow.size(3)).expand(tensorFlow.size(0), -1, tensorFlow.size(2), -1)
+            tensorVertical = torch.linspace(-1.0, 1.0, tensorFlow.size(2)).view(
+                1, 1, tensorFlow.size(2), 1).expand(tensorFlow.size(0), -1, -1, tensorFlow.size(3))
             Backward_tensorGrid_cpu[str(tensorFlow.size())] = torch.cat(
-                [tensorHorizontal, tensorVertical], 1
-            ).cpu()
+                [tensorHorizontal, tensorVertical], 1).cpu()
 
-        tensorFlow = torch.cat(
-            [
-                tensorFlow[:, 0:1, :, :] / ((tensorInput.size(3) - 1.0) / 2.0),
-                tensorFlow[:, 1:2, :, :] / ((tensorInput.size(2) - 1.0) / 2.0),
-            ],
-            1,
-        )
+        tensorFlow = torch.cat([tensorFlow[:, 0:1, :, :] / ((tensorInput.size(3) - 1.0) / 2.0),
+                                tensorFlow[:, 1:2, :, :] / ((tensorInput.size(2) - 1.0) / 2.0)], 1)
 
-        grid = Backward_tensorGrid_cpu[str(tensorFlow.size())] + tensorFlow
-        return torch.nn.functional.grid_sample(
-            input=tensorInput,
-            grid=grid.permute(0, 2, 3, 1),
-            mode="bilinear",
-            padding_mode="border",
-            align_corners=True,
-        )
+        grid = (Backward_tensorGrid_cpu[str(tensorFlow.size())] + tensorFlow)
+        return torch.nn.functional.grid_sample(input=tensorInput,
+                                               grid=grid.permute(0, 2, 3, 1),
+                                               mode='bilinear',
+                                               padding_mode='border',
+                                               align_corners=True)
     else:
         device_id = tensorInput.device.index
         if str(tensorFlow.size()) not in Backward_tensorGrid[device_id]:
-            tensorHorizontal = (
-                torch.linspace(-1.0, 1.0, tensorFlow.size(3))
-                .view(1, 1, 1, tensorFlow.size(3))
-                .expand(tensorFlow.size(0), -1, tensorFlow.size(2), -1)
-            )
-            tensorVertical = (
-                torch.linspace(-1.0, 1.0, tensorFlow.size(2))
-                .view(1, 1, tensorFlow.size(2), 1)
-                .expand(tensorFlow.size(0), -1, -1, tensorFlow.size(3))
-            )
-            Backward_tensorGrid[device_id][str(tensorFlow.size())] = (
-                torch.cat([tensorHorizontal, tensorVertical], 1).cuda().to(device_id)
-            )
+            tensorHorizontal = torch.linspace(-1.0, 1.0, tensorFlow.size(3)).view(
+                1, 1, 1, tensorFlow.size(3)).expand(tensorFlow.size(0), -1, tensorFlow.size(2), -1)
+            tensorVertical = torch.linspace(-1.0, 1.0, tensorFlow.size(2)).view(
+                1, 1, tensorFlow.size(2), 1).expand(tensorFlow.size(0), -1, -1, tensorFlow.size(3))
+            Backward_tensorGrid[device_id][str(tensorFlow.size())] = torch.cat(
+                [tensorHorizontal, tensorVertical], 1).cuda().to(device_id)
 
-        tensorFlow = torch.cat(
-            [
-                tensorFlow[:, 0:1, :, :] / ((tensorInput.size(3) - 1.0) / 2.0),
-                tensorFlow[:, 1:2, :, :] / ((tensorInput.size(2) - 1.0) / 2.0),
-            ],
-            1,
-        )
+        tensorFlow = torch.cat([tensorFlow[:, 0:1, :, :] / ((tensorInput.size(3) - 1.0) / 2.0),
+                                tensorFlow[:, 1:2, :, :] / ((tensorInput.size(2) - 1.0) / 2.0)], 1)
 
-        grid = Backward_tensorGrid[device_id][str(tensorFlow.size())] + tensorFlow
-        return torch.nn.functional.grid_sample(
-            input=tensorInput,
-            grid=grid.permute(0, 2, 3, 1),
-            mode="bilinear",
-            padding_mode="border",
-            align_corners=True,
-        )
+        grid = (Backward_tensorGrid[device_id][str(tensorFlow.size())] + tensorFlow)
+        return torch.nn.functional.grid_sample(input=tensorInput,
+                                               grid=grid.permute(0, 2, 3, 1),
+                                               mode='bilinear',
+                                               padding_mode='border',
+                                               align_corners=True)
 
 
 def flow_warp(im, flow):
@@ -161,13 +136,13 @@ def flow_warp(im, flow):
 
 
 def load_weight_form_np(me_model_dir, layername):
-    index = layername.find("modelL")
+    index = layername.find('modelL')
     if index == -1:
-        print("load models error!!")
+        print('load models error!!')
     else:
-        name = layername[index : index + 11]
-        modelweight = me_model_dir + name + "-weight.npy"
-        modelbias = me_model_dir + name + "-bias.npy"
+        name = layername[index:index + 11]
+        modelweight = me_model_dir + name + '-weight.npy'
+        modelbias = me_model_dir + name + '-bias.npy'
         weightnp = np.load(modelweight)
         biasnp = np.load(modelbias)
         return torch.from_numpy(weightnp), torch.from_numpy(biasnp)
@@ -177,11 +152,7 @@ def bilinearupsacling(inputfeature):
     inputheight = inputfeature.size()[2]
     inputwidth = inputfeature.size()[3]
     outfeature = F.interpolate(
-        inputfeature,
-        (inputheight * 2, inputwidth * 2),
-        mode="bilinear",
-        align_corners=False,
-    )
+        inputfeature, (inputheight * 2, inputwidth * 2), mode='bilinear', align_corners=False)
     return outfeature
 
 
@@ -189,15 +160,13 @@ class ResBlock(nn.Module):
     def __init__(self, inputchannel, outputchannel, kernel_size, stride=1):
         super(ResBlock, self).__init__()
         self.relu1 = nn.ReLU()
-        self.conv1 = nn.Conv2d(
-            inputchannel, outputchannel, kernel_size, stride, padding=kernel_size // 2
-        )
+        self.conv1 = nn.Conv2d(inputchannel, outputchannel,
+                               kernel_size, stride, padding=kernel_size//2)
         torch.nn.init.xavier_uniform_(self.conv1.weight.data)
         torch.nn.init.constant_(self.conv1.bias.data, 0.0)
         self.relu2 = nn.ReLU()
-        self.conv2 = nn.Conv2d(
-            outputchannel, outputchannel, kernel_size, stride, padding=kernel_size // 2
-        )
+        self.conv2 = nn.Conv2d(outputchannel, outputchannel,
+                               kernel_size, stride, padding=kernel_size//2)
         torch.nn.init.xavier_uniform_(self.conv2.weight.data)
         torch.nn.init.constant_(self.conv2.bias.data, 0.0)
         if inputchannel != outputchannel:
@@ -225,11 +194,10 @@ class ResBlock_LeakyReLU_0_Point_1(nn.Module):
             nn.Conv2d(d_model, d_model, 3, stride=1, padding=1),
             nn.LeakyReLU(0.1, inplace=True),
             nn.Conv2d(d_model, d_model, 3, stride=1, padding=1),
-            nn.LeakyReLU(0.1, inplace=True),
-        )
+            nn.LeakyReLU(0.1, inplace=True))
 
     def forward(self, x):
-        x = x + self.conv(x)
+        x = x+self.conv(x)
         return x
 
 
@@ -246,6 +214,7 @@ class MEBasic(nn.Module):
         self.relu4 = nn.ReLU()
         self.conv5 = nn.Conv2d(16, 2, 7, 1, padding=3)
 
+
     def forward(self, x):
         x = self.relu1(self.conv1(x))
         x = self.relu2(self.conv2(x))
@@ -259,7 +228,8 @@ class ME_Spynet(nn.Module):
     def __init__(self):
         super(ME_Spynet, self).__init__()
         self.L = 4
-        self.moduleBasic = torch.nn.ModuleList([MEBasic() for intLevel in range(4)])
+        self.moduleBasic = torch.nn.ModuleList(
+            [MEBasic() for intLevel in range(4)])
 
     def forward(self, im1, im2):
         batchsize = im1.size()[0]
@@ -269,24 +239,22 @@ class ME_Spynet(nn.Module):
         im1list = [im1_pre]
         im2list = [im2_pre]
         for intLevel in range(self.L - 1):
-            im1list.append(F.avg_pool2d(im1list[intLevel], kernel_size=2, stride=2))
-            im2list.append(F.avg_pool2d(im2list[intLevel], kernel_size=2, stride=2))
+            im1list.append(F.avg_pool2d(
+                im1list[intLevel], kernel_size=2, stride=2))
+            im2list.append(F.avg_pool2d(
+                im2list[intLevel], kernel_size=2, stride=2))
 
         shape_fine = im2list[self.L - 1].size()
         zeroshape = [batchsize, 2, shape_fine[2] // 2, shape_fine[3] // 2]
         device = im1.device
-        flowfileds = torch.zeros(zeroshape, dtype=torch.float32, device=device)
+        flowfileds = torch.zeros(
+            zeroshape, dtype=torch.float32, device=device)
         for intLevel in range(self.L):
             flowfiledsUpsample = bilinearupsacling(flowfileds) * 2.0
-            flowfileds = flowfiledsUpsample + self.moduleBasic[intLevel](
-                torch.cat(
-                    [
-                        im1list[self.L - 1 - intLevel],
-                        flow_warp(im2list[self.L - 1 - intLevel], flowfiledsUpsample),
-                        flowfiledsUpsample,
-                    ],
-                    1,
-                )
-            )
+            flowfileds = flowfiledsUpsample + \
+                self.moduleBasic[intLevel](torch.cat([im1list[self.L - 1 - intLevel],
+                                                      flow_warp(im2list[self.L - 1 - intLevel],
+                                                                flowfiledsUpsample),
+                                                      flowfiledsUpsample], 1))
 
         return flowfileds
