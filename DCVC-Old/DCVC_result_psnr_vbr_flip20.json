@@ -1,0 +1,26 @@
+{
+  "UVG": {
+    "Beauty_PNG_1024": {
+      "model_dcvc_quality_3_psnr.pth": {
+        "i_frame_num": 50,
+        "p_frame_num": 550,
+        "ave_i_frame_bpp": 0.08691410988569259,
+        "ave_i_frame_quality": 36.94521095275879,
+        "ave_p_frame_bpp": 0.0370507921312343,
+        "ave_p_frame_bpp_mv_y": 0.01056360865096477,
+        "ave_p_frame_bpp_mv_z": 0.0005915552081370896,
+        "ave_p_frame_bpp_y": 0.023830254184590144,
+        "ave_p_frame_bpp_z": 0.002065374291586605,
+        "ave_p_frame_quality": 36.87914444663308,
+        "ave_all_frame_bpp": 0.041206068610772494,
+        "ave_all_frame_quality": 36.884649988810224
+      }
+    },
+    "Bosphorus_PNG_1024": {},
+    "HoneyBee_PNG_1024": {},
+    "Jockey_PNG_1024": {},
+    "ReadySetGo_PNG_1024": {},
+    "ShakeNDry_PNG_1024": {},
+    "YachtRide_PNG_1024": {}
+  }
+}
