@@ -379,7 +379,7 @@ class DCVC_net(nn.Module):
     def mv_refine(self, ref, mv):
         return self.mvDecoder_part2(torch.cat((mv, ref), 1)) + mv
 
-    def train_quantize(self, x, style="add"):
+    def train_quantize(self, x, style="uniform"):
         assert style in ["add", "mult", "uniform"]
         if style == "add":
             # makes x rounded but keeps gradient in additive fashion
