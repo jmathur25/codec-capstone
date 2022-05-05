@@ -140,6 +140,38 @@ class DCVC_net(nn.Module):
             nn.LeakyReLU(inplace=True),
             nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
         )
+        
+        self.mvfeatureDeltaPrior = nn.Sequential(
+            nn.ConvTranspose2d(
+                out_channel_N, out_channel_N, 5, stride=2, padding=2, output_padding=1
+            ),
+            nn.LeakyReLU(inplace=True),
+            nn.ConvTranspose2d(
+                out_channel_N,
+                out_channel_N * 3 // 2,
+                5,
+                stride=2,
+                padding=2,
+                output_padding=1,
+            ),
+            nn.LeakyReLU(inplace=True),
+            nn.ConvTranspose2d(
+                out_channel_N * 3 // 2, out_channel_mv * 2, 3, stride=1, padding=1
+            ),
+        )
+        
+        self.mvfeatureDeltaAutogressive = MaskedConv2d(
+            out_channel_mv, 2 * out_channel_mv, kernel_size=5, padding=2, stride=1
+        )
+        
+        self.mvfeatureDelta = nn.Sequential(
+            nn.Conv2d(out_channel_mv * 4, out_channel_mv * 4, 3, padding=1, stride=1),
+            nn.LeakyReLU(inplace=True),
+            nn.Conv2d(out_channel_mv * 4, 1, 3, padding=1, stride=1),
+            nn.LeakyReLU(inplace=True),
+            nn.Conv2d(1, 1, 3, padding=1, stride=1),
+        )
+        
 
         self.mvpriorDecoder = nn.Sequential(
             nn.ConvTranspose2d(
@@ -193,6 +225,38 @@ class DCVC_net(nn.Module):
             GDN(out_channel_N),
             nn.Conv2d(out_channel_N, out_channel_M, 5, stride=2, padding=2),
         )
+        
+        self.featureDeltaPrior = nn.Sequential(
+            nn.ConvTranspose2d(
+                out_channel_N * 2, out_channel_M, 5, stride=2, padding=2, output_padding=1
+            ),
+            nn.LeakyReLU(inplace=True),
+            nn.ConvTranspose2d(
+                out_channel_M,
+                out_channel_M,
+                5,
+                stride=2,
+                padding=2,
+                output_padding=1,
+            ),
+            nn.LeakyReLU(inplace=True),
+            nn.ConvTranspose2d(
+                out_channel_M, out_channel_M, 3, stride=1, padding=1
+            ),
+        )
+        
+        self.featureDeltaAutogressive = MaskedConv2d(
+            out_channel_M, 2 * out_channel_M, kernel_size=5, padding=2, stride=1
+        )
+        
+        self.featureDelta = nn.Sequential(
+            nn.Conv2d(out_channel_M * 3 + 1, out_channel_M * 3, 3, padding=1, stride=1),
+            nn.LeakyReLU(inplace=True),
+            nn.Conv2d(out_channel_M * 3, 1, 3, padding=1, stride=1),
+            nn.LeakyReLU(inplace=True),
+            nn.Conv2d(1, 1, 3, padding=1, stride=1),
+        )
+
 
         self.opticFlow = ME_Spynet()
 
@@ -218,13 +282,14 @@ class DCVC_net(nn.Module):
         else:
             return self.train_quantize(inputs)
 
-    def feature_probs_based_sigma(self, feature, mean, sigma, compress_type):
-        outputs = self.quantize(feature, "dequantize", mean, compress_type)
-        values = outputs - mean
+    def feature_probs_based_sigma(self, feature, mean, sigma, compress_type, delta_feature):
+        # outputs = self.quantize(feature, "dequantize", mean, compress_type)
+        # values = outputs - mean
+        values = feature - mean
         mu = torch.zeros_like(sigma)
         sigma = sigma.clamp(1e-5, 1e10)
         gaussian = torch.distributions.laplace.Laplace(mu, sigma)
-        probs = gaussian.cdf(values + 0.5) - gaussian.cdf(values - 0.5)
+        probs = gaussian.cdf(values + delta_feature / 2) - gaussian.cdf(values - delta_feature / 2)
         total_bits = torch.sum(
             torch.clamp(-1.0 * torch.log(probs + 1e-5) / math.log(2.0), 0, 50)
         )
@@ -493,9 +558,9 @@ class DCVC_net(nn.Module):
 
         return recon_image
 
-    def train_quantize(self, x):
+    def train_quantize(self, x, delta):
         # Simulates quantization by adding uniform noise [-0.5, 0.5]
-        return x + torch.rand(x.shape).to(x.device) - 0.5
+        return x + delta * torch.rand(x.shape).to(x.device) - delta / 2
 
     def forward(self, referframe, input_image, compress_type=True):
         assert compress_type in ["train_compress", "full"]
@@ -505,13 +570,20 @@ class DCVC_net(nn.Module):
         if compress_type == 'full':
             compressed_z_mv = torch.round(z_mv)
         else:
-            compressed_z_mv = self.train_quantize(z_mv)
+            compressed_z_mv = self.train_quantize(z_mv, 1.0)
+            
         params_mv = self.mvpriorDecoder(compressed_z_mv)
 
         if compress_type == 'full':
             quant_mv = torch.round(mvfeature)
         else:
-            quant_mv = self.train_quantize(mvfeature)
+            # CHANGE
+            delta_mvfeaturePrior = self.mvfeatureDeltaPrior(compressed_z_mv)
+            delta_mvfeature_ar = self.mvfeatureDeltaAutogressive(self.train_quantize(mvfeature, 1.0))
+            delta_mvfeature = self.mvfeatureDelta(
+                torch.cat((delta_mvfeaturePrior, delta_mvfeature_ar), dim=1)
+            )
+            quant_mv = self.train_quantize(mvfeature, delta_mvfeature)
 
         ctx_params_mv = self.auto_regressive_mv(quant_mv)
         gaussian_params_mv = self.entropy_parameters_mv(
@@ -535,7 +607,7 @@ class DCVC_net(nn.Module):
             compressed_z = torch.round(z)
             # compressed_z = self.train_quantize(z)
         else:
-            compressed_z = self.train_quantize(z)
+            compressed_z = self.train_quantize(z, 1.0)
         params = self.priorDecoder(compressed_z)
 
         feature_renorm = feature
@@ -544,7 +616,16 @@ class DCVC_net(nn.Module):
             compressed_y_renorm = torch.round(feature_renorm)
             # compressed_y_renorm = self.train_quantize(feature_renorm)
         else:
-            compressed_y_renorm = self.train_quantize(feature_renorm)
+            # CHANGE
+            delta_featurePrior = self.featureDeltaPrior(
+                torch.cat((compressed_z, compressed_z_mv), dim=1),
+            )
+            delta_feature_ar = self.featureDeltaAutogressive(self.train_quantize(feature_renorm, 1.0))
+            delta_feature = self.featureDelta(
+                torch.cat((delta_featurePrior, delta_feature_ar, delta_mvfeature), dim=1)
+            )
+            compressed_y_renorm = self.train_quantize(feature_renorm, delta_feature)
+            # END CHANGE
 
         ctx_params = self.auto_regressive(compressed_y_renorm)
         gaussian_params = self.entropy_parameters(
@@ -558,10 +639,10 @@ class DCVC_net(nn.Module):
         )
 
         total_bits_y, _ = self.feature_probs_based_sigma(
-            feature_renorm, means_hat, scales_hat, compress_type
+            compressed_y_renorm, means_hat, scales_hat, compress_type, delta_feature
         )
         total_bits_mv, _ = self.feature_probs_based_sigma(
-            mvfeature, means_hat_mv, scales_hat_mv, compress_type
+            quant_mv, means_hat_mv, scales_hat_mv, compress_type, delta_mvfeature
         )
         total_bits_z, _ = self.iclr18_estrate_bits_z(compressed_z)
         total_bits_z_mv, _ = self.iclr18_estrate_bits_z_mv(compressed_z_mv)
