@@ -1,0 +1,11 @@
+*.pyc
+.vscode/
+*.bin
+*.png
+*.so
+build/
+*.pt
+*.tar
+*.pth
+src/cpp
+uvg/

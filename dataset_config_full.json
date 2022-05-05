@@ -1,0 +1,11 @@
+{
+    "UVG": {
+        "base_path": "./uvg/",
+        "sequences": {
+            "Beauty_PNG_1024": {
+                "frames": 36,
+                "gop": 12
+            }
+        }
+    }
+}
