@@ -80,7 +80,8 @@ class DCVC_net(nn.Module):
         )
 
         self.contextualEncoder = nn.Sequential(
-            nn.Conv2d(out_channel_N + 3, out_channel_N, 5, stride=2, padding=2),
+            nn.Conv2d(out_channel_N + 3, out_channel_N,
+                      5, stride=2, padding=2),
             GDN(out_channel_N),
             ResBlock_LeakyReLU_0_Point_1(out_channel_N),
             nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
@@ -104,7 +105,8 @@ class DCVC_net(nn.Module):
         )
 
         self.contextualDecoder_part2 = nn.Sequential(
-            nn.Conv2d(out_channel_N * 2, out_channel_N, 3, stride=1, padding=1),
+            nn.Conv2d(out_channel_N * 2, out_channel_N,
+                      3, stride=1, padding=1),
             ResBlock(out_channel_N, out_channel_N, 3),
             ResBlock(out_channel_N, out_channel_N, 3),
             nn.Conv2d(out_channel_N, 3, 3, stride=1, padding=1),
@@ -127,7 +129,8 @@ class DCVC_net(nn.Module):
                 out_channel_M, out_channel_M, 5, stride=2, padding=2, output_padding=1
             ),
             nn.LeakyReLU(inplace=True),
-            nn.ConvTranspose2d(out_channel_M, out_channel_M, 3, stride=1, padding=1),
+            nn.ConvTranspose2d(out_channel_M, out_channel_M,
+                               3, stride=1, padding=1),
         )
 
         self.mvpriorEncoder = nn.Sequential(
@@ -209,7 +212,8 @@ class DCVC_net(nn.Module):
             outputs = inputs.clone()
             outputs -= means
             outputs = torch.round(outputs)
-            outputs += means
+            # outputs += means
+            outputs += means.detach()
             return outputs
         else:
             return self.train_quantize(inputs)
@@ -234,7 +238,8 @@ class DCVC_net(nn.Module):
         return total_bits, prob
 
     def iclr18_estrate_bits_z_mv(self, z_mv):
-        prob = self.bitEstimator_z_mv(z_mv + 0.5) - self.bitEstimator_z_mv(z_mv - 0.5)
+        prob = self.bitEstimator_z_mv(
+            z_mv + 0.5) - self.bitEstimator_z_mv(z_mv - 0.5)
         total_bits = torch.sum(
             torch.clamp(-1.0 * torch.log(prob + 1e-5) / math.log(2.0), 0, 50)
         )
@@ -260,7 +265,8 @@ class DCVC_net(nn.Module):
         mv_z_string = compressed["mv_z_string"]
         y_string = compressed["y_string"]
         z_string = compressed["z_string"]
-        encode_p(H, W, mv_y_string, mv_z_string, y_string, z_string, output_path)
+        encode_p(H, W, mv_y_string, mv_z_string,
+                 y_string, z_string, output_path)
         return {
             "bpp_mv_y": compressed["bpp_mv_y"],
             "bpp_mv_z": compressed["bpp_mv_z"],
@@ -294,18 +300,20 @@ class DCVC_net(nn.Module):
 
         for h in range(height):
             for w in range(width):
-                y_crop = y_hat[0:1, :, h : h + kernel_size, w : w + kernel_size]
+                y_crop = y_hat[0:1, :, h: h + kernel_size, w: w + kernel_size]
                 ctx_p = F.conv2d(
                     y_crop,
                     context_prediction.weight,
                     bias=context_prediction.bias,
                 )
 
-                p = params[0:1, :, h : h + 1, w : w + 1]
-                gaussian_params = entropy_parameters(torch.cat((p, ctx_p), dim=1))
+                p = params[0:1, :, h: h + 1, w: w + 1]
+                gaussian_params = entropy_parameters(
+                    torch.cat((p, ctx_p), dim=1))
                 means_hat, scales_hat = gaussian_params.chunk(2, 1)
 
-                y_crop = y_crop[0:1, :, padding : padding + 1, padding : padding + 1]
+                y_crop = y_crop[0:1, :, padding: padding +
+                                1, padding: padding + 1]
                 y_crop_q = torch.round(y_crop - means_hat)
                 y_hat[0, :, h + padding, w + padding] = (y_crop_q + means_hat)[
                     0, :, 0, 0
@@ -349,20 +357,21 @@ class DCVC_net(nn.Module):
             for w in range(y_width):
                 # only perform the 5x5 convolution on a cropped tensor
                 # centered in (h, w)
-                y_crop = y_hat[0:1, :, h : h + kernel_size, w : w + kernel_size]
+                y_crop = y_hat[0:1, :, h: h + kernel_size, w: w + kernel_size]
                 ctx_p = F.conv2d(
                     y_crop,
                     context_prediction.weight,
                     bias=context_prediction.bias,
                 )
-                p = params[0:1, :, h : h + 1, w : w + 1]
-                gaussian_params = entropy_parameters(torch.cat((p, ctx_p), dim=1))
+                p = params[0:1, :, h: h + 1, w: w + 1]
+                gaussian_params = entropy_parameters(
+                    torch.cat((p, ctx_p), dim=1))
                 means_hat, scales_hat = gaussian_params.chunk(2, 1)
                 rv = self.gaussian_encoder.decode_stream(scales_hat)
                 rv = rv.to(device)
                 rv = rv + means_hat
                 y_hat[
-                    0, :, h + padding : h + padding + 1, w + padding : w + padding + 1
+                    0, :, h + padding: h + padding + 1, w + padding: w + padding + 1
                 ] = rv
 
         y_hat = y_hat[:, :, padding:-padding, padding:-padding]
@@ -385,11 +394,13 @@ class DCVC_net(nn.Module):
         )
 
         quant_mv_upsample = self.mvDecoder_part1(mv_y_hat)
-        quant_mv_upsample_refine = self.mv_refine(referframe, quant_mv_upsample)
+        quant_mv_upsample_refine = self.mv_refine(
+            referframe, quant_mv_upsample)
         context = self.motioncompensation(referframe, quant_mv_upsample_refine)
 
         temporal_prior_params = self.temporalPriorEncoder(context)
-        feature = self.contextualEncoder(torch.cat((input_image, context), dim=1))
+        feature = self.contextualEncoder(
+            torch.cat((input_image, context), dim=1))
         z = self.priorEncoder(feature)
         compressed_z = torch.round(z)
         z_string = self.bitEstimator_z.compress(compressed_z)
@@ -454,7 +465,8 @@ class DCVC_net(nn.Module):
         )
 
         quant_mv_upsample = self.mvDecoder_part1(mv_y_hat)
-        quant_mv_upsample_refine = self.mv_refine(referframe, quant_mv_upsample)
+        quant_mv_upsample_refine = self.mv_refine(
+            referframe, quant_mv_upsample)
         context = self.motioncompensation(referframe, quant_mv_upsample_refine)
         temporal_prior_params = self.temporalPriorEncoder(context)
 
@@ -509,13 +521,15 @@ class DCVC_net(nn.Module):
 
         quant_mv_upsample = self.mvDecoder_part1(quant_mv)
 
-        quant_mv_upsample_refine = self.mv_refine(referframe, quant_mv_upsample)
+        quant_mv_upsample_refine = self.mv_refine(
+            referframe, quant_mv_upsample)
 
         context = self.motioncompensation(referframe, quant_mv_upsample_refine)
 
         temporal_prior_params = self.temporalPriorEncoder(context)
 
-        feature = self.contextualEncoder(torch.cat((input_image, context), dim=1))
+        feature = self.contextualEncoder(
+            torch.cat((input_image, context), dim=1))
         z = self.priorEncoder(feature)
         if compress_type == 'full':
             compressed_z = torch.round(z)
