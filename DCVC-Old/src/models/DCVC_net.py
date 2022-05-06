@@ -170,6 +170,7 @@ class DCVC_net(nn.Module):
             nn.Conv2d(out_channel_mv * 4, 1, 3, padding=1, stride=1),
             nn.LeakyReLU(inplace=True),
             nn.Conv2d(1, 1, 3, padding=1, stride=1),
+            nn.Sigmoid()
         )
         
 
@@ -255,6 +256,7 @@ class DCVC_net(nn.Module):
             nn.Conv2d(out_channel_M * 3, 1, 3, padding=1, stride=1),
             nn.LeakyReLU(inplace=True),
             nn.Conv2d(1, 1, 3, padding=1, stride=1),
+            nn.Sigmoid()
         )
 
 
@@ -580,7 +582,7 @@ class DCVC_net(nn.Module):
             # CHANGE
             delta_mvfeaturePrior = self.mvfeatureDeltaPrior(compressed_z_mv)
             delta_mvfeature_ar = self.mvfeatureDeltaAutogressive(self.train_quantize(mvfeature, 1.0))
-            delta_mvfeature = self.mvfeatureDelta(
+            delta_mvfeature = 2 * self.mvfeatureDelta(
                 torch.cat((delta_mvfeaturePrior, delta_mvfeature_ar), dim=1)
             )
             quant_mv = self.train_quantize(mvfeature, delta_mvfeature)
@@ -621,7 +623,7 @@ class DCVC_net(nn.Module):
                 torch.cat((compressed_z, compressed_z_mv), dim=1),
             )
             delta_feature_ar = self.featureDeltaAutogressive(self.train_quantize(feature_renorm, 1.0))
-            delta_feature = self.featureDelta(
+            delta_feature = 2 * self.featureDelta(
                 torch.cat((delta_featurePrior, delta_feature_ar, delta_mvfeature), dim=1)
             )
             compressed_y_renorm = self.train_quantize(feature_renorm, delta_feature)
