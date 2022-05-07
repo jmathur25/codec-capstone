@@ -379,7 +379,7 @@ class DCVC_net(nn.Module):
     def mv_refine(self, ref, mv):
         return self.mvDecoder_part2(torch.cat((mv, ref), 1)) + mv
 
-    def train_quantize(x):
+    def train_quantize(self, x):
         # Simulates quantization by adding uniform noise [-0.5, 0.5]
         return x + torch.rand(x.shape).to(x.device) - 0.5
 
