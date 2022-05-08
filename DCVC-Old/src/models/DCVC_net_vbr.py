@@ -2,6 +2,7 @@ import torch
 import math
 import torch.nn as nn
 import torch.nn.functional as F
+import random
 
 from .video_net import ME_Spynet, GDN, flow_warp, ResBlock, ResBlock_LeakyReLU_0_Point_1
 from ..entropy_models.video_entropy_models import BitEstimator, GaussianEncoder
@@ -10,8 +11,7 @@ from ..layers.layers import MaskedConv2d, subpel_conv3x3
 
 
 class DCVC_net(nn.Module):
-    def __init__(self, up_strategy):
-        assert up_strategy in ["resize_conv", "mod_convtranspose2d", "default"]
+    def __init__(self):
         super().__init__()
         out_channel_mv = 128
         out_channel_N = 64
@@ -46,93 +46,23 @@ class DCVC_net(nn.Module):
             nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=2, padding=1),
         )
 
-        if up_strategy == "resize_conv":
-            # https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/issues/190
-            self.mvDecoder_part1 = nn.Sequential(
-                nn.Upsample(scale_factor=2, mode="bilinear"),
-                nn.ReflectionPad2d(1),
-                nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=1, padding=0),
-                GDN(out_channel_mv, inverse=True),
-                nn.Upsample(scale_factor=2, mode="bilinear"),
-                nn.ReflectionPad2d(1),
-                nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=1, padding=0),
-                GDN(out_channel_mv, inverse=True),
-                nn.Upsample(scale_factor=2, mode="bilinear"),
-                nn.ReflectionPad2d(1),
-                nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=1, padding=0),
-                GDN(out_channel_mv, inverse=True),
-                nn.Upsample(scale_factor=2, mode="bilinear"),
-                nn.ReflectionPad2d(1),
-                nn.Conv2d(out_channel_mv, 2, 3, stride=1, padding=0),
-            )
-        elif up_strategy == "mod_convtranspose2d":
-            self.mvDecoder_part1 = nn.Sequential(
-                nn.ConvTranspose2d(
-                    out_channel_mv,
-                    out_channel_mv,
-                    4,
-                    stride=2,
-                    padding=1,
-                    output_padding=0,
-                ),
-                GDN(out_channel_mv, inverse=True),
-                nn.ConvTranspose2d(
-                    out_channel_mv,
-                    out_channel_mv,
-                    4,
-                    stride=2,
-                    padding=1,
-                    output_padding=0,
-                ),
-                GDN(out_channel_mv, inverse=True),
-                nn.ConvTranspose2d(
-                    out_channel_mv,
-                    out_channel_mv,
-                    4,
-                    stride=2,
-                    padding=1,
-                    output_padding=0,
-                ),
-                GDN(out_channel_mv, inverse=True),
-                nn.ConvTranspose2d(
-                    out_channel_mv, 2, 4, stride=2, padding=1, output_padding=0
-                ),
-            )
-        elif up_strategy == "default":
-            self.mvDecoder_part1 = nn.Sequential(
-                nn.ConvTranspose2d(
-                    out_channel_mv,
-                    out_channel_mv,
-                    3,
-                    stride=2,
-                    padding=1,
-                    output_padding=1,
-                ),
-                GDN(out_channel_mv, inverse=True),
-                nn.ConvTranspose2d(
-                    out_channel_mv,
-                    out_channel_mv,
-                    3,
-                    stride=2,
-                    padding=1,
-                    output_padding=1,
-                ),
-                GDN(out_channel_mv, inverse=True),
-                nn.ConvTranspose2d(
-                    out_channel_mv,
-                    out_channel_mv,
-                    3,
-                    stride=2,
-                    padding=1,
-                    output_padding=1,
-                ),
-                GDN(out_channel_mv, inverse=True),
-                nn.ConvTranspose2d(
-                    out_channel_mv, 2, 3, stride=2, padding=1, output_padding=1
-                ),
-            )
-        else:
-            raise ValueError("Unhandled up strategy", up_strategy)
+        self.mvDecoder_part1 = nn.Sequential(
+            nn.ConvTranspose2d(
+                out_channel_mv, out_channel_mv, 3, stride=2, padding=1, output_padding=1
+            ),
+            GDN(out_channel_mv, inverse=True),
+            nn.ConvTranspose2d(
+                out_channel_mv, out_channel_mv, 3, stride=2, padding=1, output_padding=1
+            ),
+            GDN(out_channel_mv, inverse=True),
+            nn.ConvTranspose2d(
+                out_channel_mv, out_channel_mv, 3, stride=2, padding=1, output_padding=1
+            ),
+            GDN(out_channel_mv, inverse=True),
+            nn.ConvTranspose2d(
+                out_channel_mv, 2, 3, stride=2, padding=1, output_padding=1
+            ),
+        )
 
         self.mvDecoder_part2 = nn.Sequential(
             nn.Conv2d(5, 64, 3, stride=1, padding=1),
@@ -151,15 +81,15 @@ class DCVC_net(nn.Module):
         )
 
         self.contextualEncoder = nn.Sequential(
-            nn.Conv2d(out_channel_N * 2 + 3, out_channel_N * 2, 5, stride=2, padding=2),
-            GDN(out_channel_N * 2),
-            ResBlock_LeakyReLU_0_Point_1(out_channel_N * 2),
-            nn.Conv2d(out_channel_N * 2, out_channel_N * 2, 5, stride=2, padding=2),
-            GDN(out_channel_N * 2),
-            ResBlock_LeakyReLU_0_Point_1(out_channel_N * 2),
-            nn.Conv2d(out_channel_N * 2, out_channel_M, 5, stride=2, padding=2),
-            GDN(out_channel_M),
-            nn.Conv2d(out_channel_M, out_channel_M, 5, stride=2, padding=2),
+            nn.Conv2d(out_channel_N + 3, out_channel_N, 5, stride=2, padding=2),
+            GDN(out_channel_N),
+            ResBlock_LeakyReLU_0_Point_1(out_channel_N),
+            nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
+            GDN(out_channel_N),
+            ResBlock_LeakyReLU_0_Point_1(out_channel_N),
+            nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
+            GDN(out_channel_N),
+            nn.Conv2d(out_channel_N, out_channel_M, 5, stride=2, padding=2),
         )
 
         self.contextualDecoder_part1 = nn.Sequential(
@@ -175,8 +105,8 @@ class DCVC_net(nn.Module):
         )
 
         self.contextualDecoder_part2 = nn.Sequential(
-            nn.Conv2d(out_channel_N * 3, out_channel_N * 2, 3, stride=1, padding=1),
-            ResBlock(out_channel_N * 2, out_channel_N, 3),
+            nn.Conv2d(out_channel_N * 2, out_channel_N, 3, stride=1, padding=1),
+            ResBlock(out_channel_N, out_channel_N, 3),
             ResBlock(out_channel_N, out_channel_N, 3),
             nn.Conv2d(out_channel_N, 3, 3, stride=1, padding=1),
         )
@@ -189,71 +119,17 @@ class DCVC_net(nn.Module):
             nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
         )
 
-        if up_strategy == "resize_conv":
-            # https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/issues/190
-            self.priorDecoder = nn.Sequential(
-                nn.Upsample(scale_factor=2, mode="bilinear"),
-                nn.ReflectionPad2d(1),
-                nn.Conv2d(out_channel_N, out_channel_M, 3, stride=1, padding=0),
-                nn.LeakyReLU(inplace=True),
-                nn.Upsample(scale_factor=2, mode="bilinear"),
-                nn.ReflectionPad2d(1),
-                nn.Conv2d(out_channel_M, out_channel_M, 3, stride=1, padding=0),
-                nn.LeakyReLU(inplace=True),
-                nn.Upsample(scale_factor=2, mode="bilinear"),
-                nn.ReflectionPad2d(1),
-                nn.Conv2d(out_channel_M, out_channel_M, 3, stride=1, padding=0),
-            )
-        elif up_strategy == "mod_convtranspose2d":
-            self.priorDecoder = nn.Sequential(
-                nn.ConvTranspose2d(
-                    out_channel_N,
-                    out_channel_M,
-                    4,
-                    stride=2,
-                    padding=2,
-                    output_padding=2,
-                ),
-                nn.LeakyReLU(inplace=True),
-                nn.ConvTranspose2d(
-                    out_channel_M,
-                    out_channel_M,
-                    4,
-                    stride=2,
-                    padding=2,
-                    output_padding=2,
-                ),
-                nn.LeakyReLU(inplace=True),
-                nn.ConvTranspose2d(
-                    out_channel_M, out_channel_M, 3, stride=1, padding=1
-                ),
-            )
-        elif up_strategy == "default":
-            self.priorDecoder = nn.Sequential(
-                nn.ConvTranspose2d(
-                    out_channel_N,
-                    out_channel_M,
-                    5,
-                    stride=2,
-                    padding=2,
-                    output_padding=1,
-                ),
-                nn.LeakyReLU(inplace=True),
-                nn.ConvTranspose2d(
-                    out_channel_M,
-                    out_channel_M,
-                    5,
-                    stride=2,
-                    padding=2,
-                    output_padding=1,
-                ),
-                nn.LeakyReLU(inplace=True),
-                nn.ConvTranspose2d(
-                    out_channel_M, out_channel_M, 3, stride=1, padding=1
-                ),
-            )
-        else:
-            raise ValueError("Unhanded up strategy", up_strategy)
+        self.priorDecoder = nn.Sequential(
+            nn.ConvTranspose2d(
+                out_channel_N, out_channel_M, 5, stride=2, padding=2, output_padding=1
+            ),
+            nn.LeakyReLU(inplace=True),
+            nn.ConvTranspose2d(
+                out_channel_M, out_channel_M, 5, stride=2, padding=2, output_padding=1
+            ),
+            nn.LeakyReLU(inplace=True),
+            nn.ConvTranspose2d(out_channel_M, out_channel_M, 3, stride=1, padding=1),
+        )
 
         self.mvpriorEncoder = nn.Sequential(
             nn.Conv2d(out_channel_mv, out_channel_N, 3, stride=1, padding=1),
@@ -263,75 +139,24 @@ class DCVC_net(nn.Module):
             nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
         )
 
-        if up_strategy == "resize_conv":
-            # https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/issues/190
-            self.mvpriorDecoder = nn.Sequential(
-                nn.Upsample(scale_factor=2, mode="bilinear"),
-                nn.ReflectionPad2d(1),
-                nn.Conv2d(out_channel_N, out_channel_N, 3, stride=1, padding=0),
-                nn.LeakyReLU(inplace=True),
-                nn.Upsample(scale_factor=2, mode="bilinear"),
-                nn.ReflectionPad2d(1),
-                nn.Conv2d(
-                    out_channel_N, out_channel_N * 3 // 2, 3, stride=1, padding=0
-                ),
-                nn.LeakyReLU(inplace=True),
-                nn.Upsample(scale_factor=2, mode="bilinear"),
-                nn.ReflectionPad2d(1),
-                nn.Conv2d(
-                    out_channel_N * 3 // 2, out_channel_mv * 2, 3, stride=1, padding=0
-                ),
-            )
-        elif up_strategy == "mod_convtranspose2d":
-            self.mvpriorDecoder = nn.Sequential(
-                nn.ConvTranspose2d(
-                    out_channel_N,
-                    out_channel_N,
-                    4,
-                    stride=2,
-                    padding=2,
-                    output_padding=2,
-                ),
-                nn.LeakyReLU(inplace=True),
-                nn.ConvTranspose2d(
-                    out_channel_N,
-                    out_channel_N * 3 // 2,
-                    4,
-                    stride=2,
-                    padding=2,
-                    output_padding=2,
-                ),
-                nn.LeakyReLU(inplace=True),
-                nn.ConvTranspose2d(
-                    out_channel_N * 3 // 2, out_channel_mv * 2, 3, stride=1, padding=1
-                ),
-            )
-        elif up_strategy == "default":
-            self.mvpriorDecoder = nn.Sequential(
-                nn.ConvTranspose2d(
-                    out_channel_N,
-                    out_channel_N,
-                    5,
-                    stride=2,
-                    padding=2,
-                    output_padding=1,
-                ),
-                nn.LeakyReLU(inplace=True),
-                nn.ConvTranspose2d(
-                    out_channel_N,
-                    out_channel_N * 3 // 2,
-                    5,
-                    stride=2,
-                    padding=2,
-                    output_padding=1,
-                ),
-                nn.LeakyReLU(inplace=True),
-                nn.ConvTranspose2d(
-                    out_channel_N * 3 // 2, out_channel_mv * 2, 3, stride=1, padding=1
-                ),
-            )
-        else:
-            raise ValueError("Unknown up strategy", up_strategy)
+        self.mvpriorDecoder = nn.Sequential(
+            nn.ConvTranspose2d(
+                out_channel_N, out_channel_N, 5, stride=2, padding=2, output_padding=1
+            ),
+            nn.LeakyReLU(inplace=True),
+            nn.ConvTranspose2d(
+                out_channel_N,
+                out_channel_N * 3 // 2,
+                5,
+                stride=2,
+                padding=2,
+                output_padding=1,
+            ),
+            nn.LeakyReLU(inplace=True),
+            nn.ConvTranspose2d(
+                out_channel_N * 3 // 2, out_channel_mv * 2, 3, stride=1, padding=1
+            ),
+        )
 
         self.entropy_parameters = nn.Sequential(
             nn.Conv2d(out_channel_M * 12 // 3, out_channel_M * 10 // 3, 1),
@@ -358,13 +183,13 @@ class DCVC_net(nn.Module):
         )
 
         self.temporalPriorEncoder = nn.Sequential(
-            nn.Conv2d(out_channel_N * 2, out_channel_N * 2, 5, stride=2, padding=2),
-            GDN(out_channel_N * 2),
-            nn.Conv2d(out_channel_N * 2, out_channel_N * 2, 5, stride=2, padding=2),
-            GDN(out_channel_N * 2),
-            nn.Conv2d(out_channel_N * 2, out_channel_N * 2, 5, stride=2, padding=2),
-            GDN(out_channel_N * 2),
-            nn.Conv2d(out_channel_N * 2, out_channel_M, 5, stride=2, padding=2),
+            nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
+            GDN(out_channel_N),
+            nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
+            GDN(out_channel_N),
+            nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
+            GDN(out_channel_N),
+            nn.Conv2d(out_channel_N, out_channel_M, 5, stride=2, padding=2),
         )
 
         self.opticFlow = ME_Spynet()
@@ -379,27 +204,16 @@ class DCVC_net(nn.Module):
     def mv_refine(self, ref, mv):
         return self.mvDecoder_part2(torch.cat((mv, ref), 1)) + mv
 
-    def train_quantize(self, x):
-        # Simulates quantization by adding uniform noise [-0.5, 0.5]
-        return x + torch.rand(x.shape).to(x.device) - 0.5
-
-    def quantize(self, inputs, mode, means, compress_type):
+    def quantize(self, inputs, mode, means=None):
         assert mode == "dequantize"
-        if compress_type == "no_compress":
-            return inputs
-        elif compress_type == "train_compress":
-            return self.train_quantize(inputs)
-        elif compress_type == "full":
-            outputs = inputs.clone()
-            outputs -= means
-            outputs = torch.round(outputs)
-            outputs += means
-            return outputs
-        else:
-            raise ValueError("Unknown compress type", compress_type)
+        outputs = inputs.clone()
+        outputs -= means
+        outputs = torch.round(outputs)
+        outputs += means
+        return outputs
 
-    def feature_probs_based_sigma(self, feature, mean, sigma, compress_type):
-        outputs = self.quantize(feature, "dequantize", mean, compress_type)
+    def feature_probs_based_sigma(self, feature, mean, sigma):
+        outputs = self.quantize(feature, "dequantize", mean)
         values = outputs - mean
         mu = torch.zeros_like(sigma)
         sigma = sigma.clamp(1e-5, 1e10)
@@ -496,11 +310,18 @@ class DCVC_net(nn.Module):
                 ]
                 y_q[0, :, h, w] = y_crop_q[0, :, 0, 0]
                 y_scales[0, :, h, w] = scales_hat[0, :, 0, 0]
+                
+#                 print("p shape", p.shape)
+#                 print("Y hat shape", y_hat.shape)
+#                 print("Y crop q shape", y_crop_q.shape)
+#                 print("Y q shape", y_q.shape)
+#                 print("Means hat shape", means_hat.shape) 
+                
         # change to channel last
         y_q = y_q.permute(0, 2, 3, 1)
         y_scales = y_scales.permute(0, 2, 3, 1)
         y_string = self.gaussian_encoder.compress(y_q, y_scales)
-        y_hat = y_hat[:, :, padding:-padding, padding:-padding]
+        y_hat = y_hat[:, :, padding:-padding, padding:-padding]     
         return y_string, y_hat
 
     def decompress_ar(
@@ -665,91 +486,57 @@ class DCVC_net(nn.Module):
 
         return recon_image
 
-    def forward(self, referframe1, referframe2, input_image, compress_type):
-        assert compress_type in ["no_compress", "train_compress", "full"]
-        estmv1 = self.opticFlow(input_image, referframe1)
-        estmv2 = self.opticFlow(input_image, referframe2)
+    def train_quantize(self, x):
+        # Simulates quantization by adding uniform noise [-0.5, 0.5]
+        return x + torch.rand(x.shape).to(x.device) - 0.5
 
-        mvfeature1 = self.mvEncoder(estmv1)
-        mvfeature2 = self.mvEncoder(estmv2)
-
-        if compress_type == "no_compress":
-            z_mv1 = self.mvpriorEncoder(mvfeature1)
-            z_mv2 = self.mvpriorEncoder(mvfeature2)
-            compressed_z_mv1 = z_mv1
-            compressed_z_mv2 = z_mv2
-            params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
-            params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
-            quant_mv1 = mvfeature1
-            quant_mv2 = mvfeature2
-        elif compress_type == "train_compress":
-            z_mv1 = self.mvpriorEncoder(mvfeature1)
-            z_mv2 = self.mvpriorEncoder(mvfeature2)
-            compressed_z_mv1 = self.train_quantize(z_mv1)
-            compressed_z_mv2 = self.train_quantize(z_mv2)
-            params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
-            params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
-            quant_mv1 = self.train_quantize(mvfeature1)
-            quant_mv2 = self.train_quantize(mvfeature2)
-        elif compress_type == "full":
-            z_mv1 = self.mvpriorEncoder(mvfeature1)
-            z_mv2 = self.mvpriorEncoder(mvfeature2)
-            compressed_z_mv1 = torch.round(z_mv1)
-            compressed_z_mv2 = torch.round(z_mv2)
-            params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
-            params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
-            quant_mv1 = torch.round(mvfeature1)
-            quant_mv2 = torch.round(mvfeature2)
+    def forward(self, referframe, input_image, compress=True):
+        estmv = self.opticFlow(input_image, referframe)
+        mvfeature = self.mvEncoder(estmv)
+        z_mv = self.mvpriorEncoder(mvfeature)
+        if compress:
+            compressed_z_mv = torch.round(z_mv)
+            # compressed_z_mv = self.train_quantize(z_mv)
         else:
-            raise ValueError("Unknown compress type", compress_type)
+            compressed_z_mv = z_mv
+        params_mv = self.mvpriorDecoder(compressed_z_mv)
 
-        ctx_params_mv1 = self.auto_regressive_mv(quant_mv1)
-        gaussian_params_mv1 = self.entropy_parameters_mv(
-            torch.cat((params_mv1, ctx_params_mv1), dim=1)
+        if compress:
+            quant_mv = torch.round(mvfeature)
+            # quant_mv = self.train_quantize(mvfeature)
+        else:
+            quant_mv = mvfeature
+
+        ctx_params_mv = self.auto_regressive_mv(quant_mv)
+        gaussian_params_mv = self.entropy_parameters_mv(
+            torch.cat((params_mv, ctx_params_mv), dim=1)
         )
-        means_hat_mv1, scales_hat_mv1 = gaussian_params_mv1.chunk(2, 1)
-        ctx_params_mv2 = self.auto_regressive_mv(quant_mv2)
-        gaussian_params_mv2 = self.entropy_parameters_mv(
-            torch.cat((params_mv2, ctx_params_mv2), dim=1)
-        )
-        means_hat_mv2, scales_hat_mv2 = gaussian_params_mv2.chunk(2, 1)
+        means_hat_mv, scales_hat_mv = gaussian_params_mv.chunk(2, 1)
 
-        quant_mv_upsample1 = self.mvDecoder_part1(quant_mv1)
-        quant_mv_upsample2 = self.mvDecoder_part1(quant_mv2)
-        quant_mv_upsample_refine1 = self.mv_refine(referframe1, quant_mv_upsample1)
-        quant_mv_upsample_refine2 = self.mv_refine(referframe2, quant_mv_upsample2)
+        quant_mv_upsample = self.mvDecoder_part1(quant_mv)
 
-        context1 = self.motioncompensation(referframe1, quant_mv_upsample_refine1)
-        context2 = self.motioncompensation(referframe2, quant_mv_upsample_refine2)
+        quant_mv_upsample_refine = self.mv_refine(referframe, quant_mv_upsample)
 
-        temporal_prior_params = self.temporalPriorEncoder(
-            torch.cat((context1, context2), dim=1)
-        )
+        context = self.motioncompensation(referframe, quant_mv_upsample_refine)
 
-        feature = self.contextualEncoder(
-            torch.cat((input_image, context1, context2), dim=1)
-        )
+        temporal_prior_params = self.temporalPriorEncoder(context)
 
-        if compress_type == "no_compress":
-            z = self.priorEncoder(feature)
-            compressed_z = z
-            params = self.priorDecoder(compressed_z)
-            feature_renorm = feature
-            compressed_y_renorm = feature_renorm
-        elif compress_type == "train_compress":
-            z = self.priorEncoder(feature)
-            compressed_z = self.train_quantize(z)
-            params = self.priorDecoder(compressed_z)
-            feature_renorm = feature
-            compressed_y_renorm = self.train_quantize(feature_renorm)
-        elif compress_type == "full":
-            z = self.priorEncoder(feature)
+        feature = self.contextualEncoder(torch.cat((input_image, context), dim=1))
+        z = self.priorEncoder(feature)
+        if compress:
             compressed_z = torch.round(z)
-            params = self.priorDecoder(compressed_z)
-            feature_renorm = feature
-            compressed_y_renorm = torch.round(feature_renorm)
+            # compressed_z = self.train_quantize(z)
         else:
-            raise ValueError("Unknown compress type", compress_type)
+            compressed_z = z
+        params = self.priorDecoder(compressed_z)
+
+        feature_renorm = feature
+
+        if compress:
+            compressed_y_renorm = torch.round(feature_renorm)
+            # compressed_y_renorm = self.train_quantize(feature_renorm)
+        else:
+            compressed_y_renorm = feature_renorm
 
         ctx_params = self.auto_regressive(compressed_y_renorm)
         gaussian_params = self.entropy_parameters(
@@ -759,28 +546,30 @@ class DCVC_net(nn.Module):
 
         recon_image_feature = self.contextualDecoder_part1(compressed_y_renorm)
         recon_image = self.contextualDecoder_part2(
-            torch.cat((recon_image_feature, context1, context2), dim=1)
+            torch.cat((recon_image_feature, context), dim=1)
         )
 
+#         flip_threshold = 1
+#         feature_renorm_mask = torch.rand(feature_renorm.shape) < flip_threshold
+#         feature_renorm[feature_renorm_mask] = means_hat[feature_renorm_mask]
+#         mvfeature_mask = torch.rand(mvfeature.shape) < flip_threshold
+#         mvfeature[mvfeature_mask] = means_hat_mv[mvfeature_mask]
+            
         total_bits_y, _ = self.feature_probs_based_sigma(
-            feature_renorm, means_hat, scales_hat, compress_type
+            feature_renorm, means_hat, scales_hat
         )
-        total_bits_mv1, _ = self.feature_probs_based_sigma(
-            mvfeature1, means_hat_mv1, scales_hat_mv1, compress_type
-        )
-        total_bits_mv2, _ = self.feature_probs_based_sigma(
-            mvfeature2, means_hat_mv2, scales_hat_mv2, compress_type
+        total_bits_mv, _ = self.feature_probs_based_sigma(
+            mvfeature, means_hat_mv, scales_hat_mv
         )
         total_bits_z, _ = self.iclr18_estrate_bits_z(compressed_z)
-        total_bits_z_mv1, _ = self.iclr18_estrate_bits_z_mv(compressed_z_mv1)
-        total_bits_z_mv2, _ = self.iclr18_estrate_bits_z_mv(compressed_z_mv2)
+        total_bits_z_mv, _ = self.iclr18_estrate_bits_z_mv(compressed_z_mv)
 
         im_shape = input_image.size()
         pixel_num = im_shape[0] * im_shape[2] * im_shape[3]
         bpp_y = total_bits_y / pixel_num
         bpp_z = total_bits_z / pixel_num
-        bpp_mv_y = (total_bits_mv1 + total_bits_mv2) / pixel_num
-        bpp_mv_z = (total_bits_z_mv1 + total_bits_z_mv2) / pixel_num
+        bpp_mv_y = total_bits_mv / pixel_num
+        bpp_mv_z = total_bits_z_mv / pixel_num
 
         bpp = bpp_y + bpp_z + bpp_mv_y + bpp_mv_z
 
@@ -791,8 +580,7 @@ class DCVC_net(nn.Module):
             "bpp_z": bpp_z,
             "bpp": bpp,
             "recon_image": recon_image,
-            "context1": context1,
-            "context2": context2,
+            "context": context,
         }
 
     def load_dict(self, pretrained_dict):
