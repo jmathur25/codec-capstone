@@ -493,6 +493,21 @@ class DCVC_net(nn.Module):
 
         return recon_image
 
+    def est_mv_bits(
+        self, mvfeature, quant_mv, params_mv, compressed_z_mv, compress_type
+    ):
+        # BPP Calculations
+        ctx_params_mv = self.auto_regressive_mv(quant_mv)
+        gaussian_params_mv = self.entropy_parameters_mv(
+            torch.cat((params_mv, ctx_params_mv), dim=1)
+        )
+        means_hat_mv, scales_hat_mv = gaussian_params_mv.chunk(2, 1)
+        total_bits_mv, _ = self.feature_probs_based_sigma(
+            mvfeature, means_hat_mv, scales_hat_mv, compress_type
+        )
+        total_bits_z_mv, _ = self.iclr18_estrate_bits_z_mv(compressed_z_mv)
+        return total_bits_z_mv, total_bits_mv
+
     def train_quantize(self, x):
         # Simulates quantization by adding uniform noise [-0.5, 0.5]
         return x + torch.rand(x.shape).to(x.device) - 0.5
@@ -504,12 +519,23 @@ class DCVC_net(nn.Module):
         pixel_num = im_shape[0] * im_shape[2] * im_shape[3]
 
         estmv = self.opticFlow(input_image, referframe)
+
+        # mvfeature1 = self.mvEncoder(estmv1)
+        # mvfeature2 = self.mvEncoder(estmv2)
         mvfeature = self.mvEncoder(estmv)
 
         if compress_type == "train_compress":
+            # z_mv1 = self.mvpriorEncoder(mvfeature1)
+            # z_mv2 = self.mvpriorEncoder(mvfeature2)
             z_mv = self.mvpriorEncoder(mvfeature)
+            # compressed_z_mv1 = self.train_quantize(z_mv1)
+            # compressed_z_mv2 = self.train_quantize(z_mv2)
             compressed_z_mv = self.train_quantize(z_mv)
+            # params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
+            # params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
             params_mv = self.mvpriorDecoder(compressed_z_mv)
+            # quant_mv1 = self.train_quantize(mvfeature1)
+            # quant_mv2 = self.train_quantize(mvfeature2)
             quant_mv = self.train_quantize(mvfeature)
         elif compress_type == "full":
             z_mv1 = self.mvpriorEncoder(mvfeature1)
@@ -523,13 +549,29 @@ class DCVC_net(nn.Module):
         else:
             raise ValueError("Unknown compress type", compress_type)
 
+        # ctx_params_mv1 = self.auto_regressive_mv(quant_mv1)
+        # gaussian_params_mv1 = self.entropy_parameters_mv(
+        #     torch.cat((params_mv1, ctx_params_mv1), dim=1)
+        # )
+        # means_hat_mv1, scales_hat_mv1 = gaussian_params_mv1.chunk(2, 1)
+        # ctx_params_mv2 = self.auto_regressive_mv(quant_mv2)
+        # gaussian_params_mv2 = self.entropy_parameters_mv(
+        #     torch.cat((params_mv2, ctx_params_mv2), dim=1)
+        # )
+        # means_hat_mv2, scales_hat_mv2 = gaussian_params_mv2.chunk(2, 1)
+
+        # quant_mv_upsample1 = self.mvDecoder_part1(quant_mv1)
+        # quant_mv_upsample2 = self.mvDecoder_part1(quant_mv2)
         quant_mv_upsample = self.mvDecoder_part1(quant_mv)
+        # quant_mv_upsample_refine1 = self.mv_refine(referframe1, quant_mv_upsample1)
+        # quant_mv_upsample_refine2 = self.mv_refine(referframe2, quant_mv_upsample2)
         quant_mv_upsample_refine = self.mv_refine(
-            referframe, quant_mv_upsample_refine
+            referframe, quant_mv_upsample
         )
+
         if train_type == "memc":
             pred = flow_warp(referframe, quant_mv_upsample_refine)
-            return {"pred": pred1}
+            return {"pred": pred}
         elif train_type == "memc_bpp":
             pred = flow_warp(referframe, quant_mv_upsample_refine)
             total_bits_z_mv, total_bits_mv = self.est_mv_bits(
@@ -542,8 +584,12 @@ class DCVC_net(nn.Module):
             }
 
         context = self.motioncompensation(referframe, quant_mv_upsample_refine)
+
         temporal_prior_params = self.temporalPriorEncoder(context)
-        feature = self.contextualEncoder(context)
+
+        feature = self.contextualEncoder(
+            torch.cat((input_image, context), dim=1)
+        )
 
         if compress_type == "train_compress":
             z = self.priorEncoder(feature)
