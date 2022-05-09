@@ -497,81 +497,96 @@ class DCVC_net(nn.Module):
         # Simulates quantization by adding uniform noise [-0.5, 0.5]
         return x + torch.rand(x.shape).to(x.device) - 0.5
 
-    def forward(self, referframe, input_image, compress_type=True):
-        assert compress_type in ["train_compress", "full"]
+    def forward(self, referframe, input_image, compress_type, train_type):
+        assert train_type in ["memc", "memc_bpp", "recon", "full"]
+        assert compress_type in ["no_compress", "train_compress", "full"]
+        im_shape = input_image.size()
+        pixel_num = im_shape[0] * im_shape[2] * im_shape[3]
+
         estmv = self.opticFlow(input_image, referframe)
         mvfeature = self.mvEncoder(estmv)
-        z_mv = self.mvpriorEncoder(mvfeature)
-        if compress_type == 'full':
-            compressed_z_mv = torch.round(z_mv)
-        else:
+
+        if compress_type == "train_compress":
+            z_mv = self.mvpriorEncoder(mvfeature)
             compressed_z_mv = self.train_quantize(z_mv)
-        params_mv = self.mvpriorDecoder(compressed_z_mv)
-
-        if compress_type == 'full':
-            quant_mv = torch.round(mvfeature)
-        else:
+            params_mv = self.mvpriorDecoder(compressed_z_mv)
             quant_mv = self.train_quantize(mvfeature)
-
-        ctx_params_mv = self.auto_regressive_mv(quant_mv)
-        gaussian_params_mv = self.entropy_parameters_mv(
-            torch.cat((params_mv, ctx_params_mv), dim=1)
-        )
-        means_hat_mv, scales_hat_mv = gaussian_params_mv.chunk(2, 1)
+        elif compress_type == "full":
+            z_mv1 = self.mvpriorEncoder(mvfeature1)
+            z_mv2 = self.mvpriorEncoder(mvfeature2)
+            compressed_z_mv1 = torch.round(z_mv1)
+            compressed_z_mv2 = torch.round(z_mv2)
+            params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
+            params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
+            quant_mv1 = torch.round(mvfeature1)
+            quant_mv2 = torch.round(mvfeature2)
+        else:
+            raise ValueError("Unknown compress type", compress_type)
 
         quant_mv_upsample = self.mvDecoder_part1(quant_mv)
-
         quant_mv_upsample_refine = self.mv_refine(
-            referframe, quant_mv_upsample)
+            referframe, quant_mv_upsample_refine
+        )
+        if train_type == "memc":
+            pred = flow_warp(referframe, quant_mv_upsample_refine)
+            return {"pred": pred1}
+        elif train_type == "memc_bpp":
+            pred = flow_warp(referframe, quant_mv_upsample_refine)
+            total_bits_z_mv, total_bits_mv = self.est_mv_bits(
+                mvfeature, quant_mv, params_mv, compressed_z_mv, compress_type
+            )
+            return {
+                "pred": pred,
+                "mv_z_bpp": total_bits_z_mv / pixel_num,
+                "mv_y_bpp": total_bits_mv / pixel_num,
+            }
 
         context = self.motioncompensation(referframe, quant_mv_upsample_refine)
-
         temporal_prior_params = self.temporalPriorEncoder(context)
+        feature = self.contextualEncoder(context)
 
-        feature = self.contextualEncoder(
-            torch.cat((input_image, context), dim=1))
-        z = self.priorEncoder(feature)
-        if compress_type == 'full':
-            compressed_z = torch.round(z)
-            # compressed_z = self.train_quantize(z)
-        else:
+        if compress_type == "train_compress":
+            z = self.priorEncoder(feature)
             compressed_z = self.train_quantize(z)
-        params = self.priorDecoder(compressed_z)
-
-        feature_renorm = feature
-
-        if compress_type == 'full':
-            compressed_y_renorm = torch.round(feature_renorm)
-            # compressed_y_renorm = self.train_quantize(feature_renorm)
-        else:
+            params = self.priorDecoder(compressed_z)
+            feature_renorm = feature
             compressed_y_renorm = self.train_quantize(feature_renorm)
-
-        ctx_params = self.auto_regressive(compressed_y_renorm)
-        gaussian_params = self.entropy_parameters(
-            torch.cat((temporal_prior_params, params, ctx_params), dim=1)
-        )
-        means_hat, scales_hat = gaussian_params.chunk(2, 1)
+        elif compress_type == "full":
+            z = self.priorEncoder(feature)
+            compressed_z = torch.round(z)
+            params = self.priorDecoder(compressed_z)
+            feature_renorm = feature
+            compressed_y_renorm = torch.round(feature_renorm)
+        else:
+            raise ValueError("Unknown compress type", compress_type)
 
         recon_image_feature = self.contextualDecoder_part1(compressed_y_renorm)
         recon_image = self.contextualDecoder_part2(
             torch.cat((recon_image_feature, context), dim=1)
         )
 
+        if train_type == "recon":
+            return {"recon_image": recon_image}
+
+        # BPP Calculations
+        total_bits_z_mv, total_bits_mv = self.est_mv_bits(
+            mvfeature, quant_mv, params_mv, compressed_z_mv, compress_type
+        )
+
+        ctx_params = self.auto_regressive(compressed_y_renorm)
+        gaussian_params = self.entropy_parameters(
+            torch.cat((temporal_prior_params, params, ctx_params), dim=1)
+        )
+        means_hat, scales_hat = gaussian_params.chunk(2, 1)
         total_bits_y, _ = self.feature_probs_based_sigma(
             feature_renorm, means_hat, scales_hat, compress_type
         )
-        total_bits_mv, _ = self.feature_probs_based_sigma(
-            mvfeature, means_hat_mv, scales_hat_mv, compress_type
-        )
         total_bits_z, _ = self.iclr18_estrate_bits_z(compressed_z)
-        total_bits_z_mv, _ = self.iclr18_estrate_bits_z_mv(compressed_z_mv)
 
-        im_shape = input_image.size()
-        pixel_num = im_shape[0] * im_shape[2] * im_shape[3]
+        bpp_mv_z = total_bits_z_mv / pixel_num
+        bpp_mv_y = total_bits_mv / pixel_num
         bpp_y = total_bits_y / pixel_num
         bpp_z = total_bits_z / pixel_num
-        bpp_mv_y = total_bits_mv / pixel_num
-        bpp_mv_z = total_bits_z_mv / pixel_num
 
         bpp = bpp_y + bpp_z + bpp_mv_y + bpp_mv_z
 
@@ -582,7 +597,6 @@ class DCVC_net(nn.Module):
             "bpp_z": bpp_z,
             "bpp": bpp,
             "recon_image": recon_image,
-            "context": context,
         }
 
     def load_dict(self, pretrained_dict):
