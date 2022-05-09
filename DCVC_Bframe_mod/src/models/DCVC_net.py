@@ -36,14 +36,23 @@ class DCVC_net(nn.Module):
 
         self.gaussian_encoder = GaussianEncoder()
 
+        # self.mvEncoder = nn.Sequential(
+        #     nn.Conv2d(2, out_channel_mv, 3, stride=2, padding=1),
+        #     GDN(out_channel_mv),
+        #     nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=2, padding=1),
+        #     GDN(out_channel_mv),
+        #     nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=2, padding=1),
+        #     GDN(out_channel_mv),
+        #     nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=2, padding=1),
+        # )
         self.mvEncoder = nn.Sequential(
-            nn.Conv2d(2, out_channel_mv, 3, stride=2, padding=1),
-            GDN(out_channel_mv),
-            nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=2, padding=1),
-            GDN(out_channel_mv),
-            nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=2, padding=1),
-            GDN(out_channel_mv),
-            nn.Conv2d(out_channel_mv, out_channel_mv, 3, stride=2, padding=1),
+            nn.Conv2d(4, out_channel_mv * 2, 3, stride=2, padding=1),
+            GDN(out_channel_mv * 2),
+            nn.Conv2d(out_channel_mv * 2, out_channel_mv * 2, 3, stride=2, padding=1),
+            GDN(out_channel_mv * 2),
+            nn.Conv2d(out_channel_mv * 2, out_channel_mv * 2, 3, stride=2, padding=1),
+            GDN(out_channel_mv * 2),
+            nn.Conv2d(out_channel_mv * 2, out_channel_mv * 2, 3, stride=2, padding=1),
         )
 
         if up_strategy == "resize_conv":
@@ -99,36 +108,68 @@ class DCVC_net(nn.Module):
                 ),
             )
         elif up_strategy == "default":
+            # self.mvDecoder_part1 = nn.Sequential(
+            #     nn.ConvTranspose2d(
+            #         out_channel_mv,
+            #         out_channel_mv,
+            #         3,
+            #         stride=2,
+            #         padding=1,
+            #         output_padding=1,
+            #     ),
+            #     GDN(out_channel_mv, inverse=True),
+            #     nn.ConvTranspose2d(
+            #         out_channel_mv,
+            #         out_channel_mv,
+            #         3,
+            #         stride=2,
+            #         padding=1,
+            #         output_padding=1,
+            #     ),
+            #     GDN(out_channel_mv, inverse=True),
+            #     nn.ConvTranspose2d(
+            #         out_channel_mv,
+            #         out_channel_mv,
+            #         3,
+            #         stride=2,
+            #         padding=1,
+            #         output_padding=1,
+            #     ),
+            #     GDN(out_channel_mv, inverse=True),
+            #     nn.ConvTranspose2d(
+            #         out_channel_mv, 2, 3, stride=2, padding=1, output_padding=1
+            #     ),
+            # )
             self.mvDecoder_part1 = nn.Sequential(
                 nn.ConvTranspose2d(
-                    out_channel_mv,
-                    out_channel_mv,
+                    out_channel_mv * 2,
+                    out_channel_mv * 2,
                     3,
                     stride=2,
                     padding=1,
                     output_padding=1,
                 ),
-                GDN(out_channel_mv, inverse=True),
+                GDN(out_channel_mv * 2, inverse=True),
                 nn.ConvTranspose2d(
-                    out_channel_mv,
-                    out_channel_mv,
+                    out_channel_mv * 2,
+                    out_channel_mv * 2,
                     3,
                     stride=2,
                     padding=1,
                     output_padding=1,
                 ),
-                GDN(out_channel_mv, inverse=True),
+                GDN(out_channel_mv * 2, inverse=True),
                 nn.ConvTranspose2d(
-                    out_channel_mv,
-                    out_channel_mv,
+                    out_channel_mv * 2,
+                    out_channel_mv * 2,
                     3,
                     stride=2,
                     padding=1,
                     output_padding=1,
                 ),
-                GDN(out_channel_mv, inverse=True),
+                GDN(out_channel_mv * 2, inverse=True),
                 nn.ConvTranspose2d(
-                    out_channel_mv, 2, 3, stride=2, padding=1, output_padding=1
+                    out_channel_mv * 2, 4, 3, stride=2, padding=1, output_padding=1
                 ),
             )
         else:
@@ -154,12 +195,12 @@ class DCVC_net(nn.Module):
             nn.Conv2d(out_channel_N * 2 + 3, out_channel_N * 2, 5, stride=2, padding=2),
             GDN(out_channel_N * 2),
             ResBlock_LeakyReLU_0_Point_1(out_channel_N * 2),
-            nn.Conv2d(out_channel_N * 2, out_channel_N * 2, 5, stride=2, padding=2),
-            GDN(out_channel_N * 2),
-            ResBlock_LeakyReLU_0_Point_1(out_channel_N * 2),
-            nn.Conv2d(out_channel_N * 2, out_channel_M, 5, stride=2, padding=2),
-            GDN(out_channel_M),
-            nn.Conv2d(out_channel_M, out_channel_M, 5, stride=2, padding=2),
+            nn.Conv2d(out_channel_N * 2, out_channel_N, 5, stride=2, padding=2),
+            GDN(out_channel_N),
+            ResBlock_LeakyReLU_0_Point_1(out_channel_N),
+            nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
+            GDN(out_channel_N),
+            nn.Conv2d(out_channel_N, out_channel_M, 5, stride=2, padding=2),
         )
 
         self.contextualDecoder_part1 = nn.Sequential(
@@ -255,8 +296,15 @@ class DCVC_net(nn.Module):
         else:
             raise ValueError("Unhanded up strategy", up_strategy)
 
+        # self.mvpriorEncoder = nn.Sequential(
+        #     nn.Conv2d(out_channel_mv, out_channel_N, 3, stride=1, padding=1),
+        #     nn.LeakyReLU(inplace=True),
+        #     nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
+        #     nn.LeakyReLU(inplace=True),
+        #     nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
+        # )
         self.mvpriorEncoder = nn.Sequential(
-            nn.Conv2d(out_channel_mv, out_channel_N, 3, stride=1, padding=1),
+            nn.Conv2d(out_channel_mv * 2, out_channel_N, 3, stride=1, padding=1),
             nn.LeakyReLU(inplace=True),
             nn.Conv2d(out_channel_N, out_channel_N, 5, stride=2, padding=2),
             nn.LeakyReLU(inplace=True),
@@ -307,6 +355,29 @@ class DCVC_net(nn.Module):
                 ),
             )
         elif up_strategy == "default":
+            # self.mvpriorDecoder = nn.Sequential(
+            #     nn.ConvTranspose2d(
+            #         out_channel_N,
+            #         out_channel_N,
+            #         5,
+            #         stride=2,
+            #         padding=2,
+            #         output_padding=1,
+            #     ),
+            #     nn.LeakyReLU(inplace=True),
+            #     nn.ConvTranspose2d(
+            #         out_channel_N,
+            #         out_channel_N * 3 // 2,
+            #         5,
+            #         stride=2,
+            #         padding=2,
+            #         output_padding=1,
+            #     ),
+            #     nn.LeakyReLU(inplace=True),
+            #     nn.ConvTranspose2d(
+            #         out_channel_N * 3 // 2, out_channel_mv * 2, 3, stride=1, padding=1
+            #     ),
+            # )
             self.mvpriorDecoder = nn.Sequential(
                 nn.ConvTranspose2d(
                     out_channel_N,
@@ -319,7 +390,7 @@ class DCVC_net(nn.Module):
                 nn.LeakyReLU(inplace=True),
                 nn.ConvTranspose2d(
                     out_channel_N,
-                    out_channel_N * 3 // 2,
+                    out_channel_N * 3,
                     5,
                     stride=2,
                     padding=2,
@@ -327,34 +398,34 @@ class DCVC_net(nn.Module):
                 ),
                 nn.LeakyReLU(inplace=True),
                 nn.ConvTranspose2d(
-                    out_channel_N * 3 // 2, out_channel_mv * 2, 3, stride=1, padding=1
+                    out_channel_N * 3, out_channel_mv * 4, 3, stride=1, padding=1
                 ),
             )
         else:
             raise ValueError("Unknown up strategy", up_strategy)
 
         self.entropy_parameters = nn.Sequential(
-            nn.Conv2d(out_channel_M * 12 // 3, out_channel_M * 10 // 3, 1),
+            nn.Conv2d(out_channel_M * 15 // 3, out_channel_M * 12 // 3, 1),
             nn.LeakyReLU(inplace=True),
-            nn.Conv2d(out_channel_M * 10 // 3, out_channel_M * 8 // 3, 1),
+            nn.Conv2d(out_channel_M * 12 // 3, out_channel_M * 9 // 3, 1),
             nn.LeakyReLU(inplace=True),
-            nn.Conv2d(out_channel_M * 8 // 3, out_channel_M * 6 // 3, 1),
+            nn.Conv2d(out_channel_M * 9 // 3, out_channel_M * 6 // 3, 1),
         )
 
         self.auto_regressive = MaskedConv2d(
-            out_channel_M, 2 * out_channel_M, kernel_size=5, padding=2, stride=1
+            out_channel_M, out_channel_M * 2, kernel_size=5, padding=2, stride=1
         )
 
         self.auto_regressive_mv = MaskedConv2d(
-            out_channel_mv, 2 * out_channel_mv, kernel_size=5, padding=2, stride=1
+            out_channel_mv * 2, out_channel_mv * 4, kernel_size=5, padding=2, stride=1
         )
 
         self.entropy_parameters_mv = nn.Sequential(
-            nn.Conv2d(out_channel_mv * 12 // 3, out_channel_mv * 10 // 3, 1),
+            nn.Conv2d(out_channel_mv * 24 // 3, out_channel_mv * 20 // 3, 1),
             nn.LeakyReLU(inplace=True),
-            nn.Conv2d(out_channel_mv * 10 // 3, out_channel_mv * 8 // 3, 1),
+            nn.Conv2d(out_channel_mv * 20 // 3, out_channel_mv * 16 // 3, 1),
             nn.LeakyReLU(inplace=True),
-            nn.Conv2d(out_channel_mv * 8 // 3, out_channel_mv * 6 // 3, 1),
+            nn.Conv2d(out_channel_mv * 16 // 3, out_channel_mv * 12 // 3, 1),
         )
 
         self.temporalPriorEncoder = nn.Sequential(
@@ -364,7 +435,7 @@ class DCVC_net(nn.Module):
             GDN(out_channel_N * 2),
             nn.Conv2d(out_channel_N * 2, out_channel_N * 2, 5, stride=2, padding=2),
             GDN(out_channel_N * 2),
-            nn.Conv2d(out_channel_N * 2, out_channel_M, 5, stride=2, padding=2),
+            nn.Conv2d(out_channel_N * 2, out_channel_M * 2, 5, stride=2, padding=2),
         )
 
         self.opticFlow = ME_Spynet()
@@ -665,32 +736,48 @@ class DCVC_net(nn.Module):
 
         return recon_image
 
-    def forward(self, referframe1, referframe2, input_image, compress_type):
+    def est_mv_bits(
+        self, mvfeature, quant_mv, params_mv, compressed_z_mv, compress_type
+    ):
+        # BPP Calculations
+        ctx_params_mv = self.auto_regressive_mv(quant_mv)
+        gaussian_params_mv = self.entropy_parameters_mv(
+            torch.cat((params_mv, ctx_params_mv), dim=1)
+        )
+        means_hat_mv, scales_hat_mv = gaussian_params_mv.chunk(2, 1)
+        total_bits_mv, _ = self.feature_probs_based_sigma(
+            mvfeature, means_hat_mv, scales_hat_mv, compress_type
+        )
+        total_bits_z_mv, _ = self.iclr18_estrate_bits_z_mv(compressed_z_mv)
+        return total_bits_z_mv, total_bits_mv
+
+    def forward(self, referframe1, referframe2, input_image, compress_type, train_type):
+        assert train_type in ["memc", "memc_bpp", "recon", "full"]
         assert compress_type in ["no_compress", "train_compress", "full"]
+        im_shape = input_image.size()
+        pixel_num = im_shape[0] * im_shape[2] * im_shape[3]
+
         estmv1 = self.opticFlow(input_image, referframe1)
         estmv2 = self.opticFlow(input_image, referframe2)
 
-        mvfeature1 = self.mvEncoder(estmv1)
-        mvfeature2 = self.mvEncoder(estmv2)
+        estmv = torch.cat([estmv1, estmv2], dim=1)
+        # mvfeature1 = self.mvEncoder(estmv1)
+        # mvfeature2 = self.mvEncoder(estmv2)
+        mvfeature = self.mvEncoder(estmv)
 
-        if compress_type == "no_compress":
-            z_mv1 = self.mvpriorEncoder(mvfeature1)
-            z_mv2 = self.mvpriorEncoder(mvfeature2)
-            compressed_z_mv1 = z_mv1
-            compressed_z_mv2 = z_mv2
-            params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
-            params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
-            quant_mv1 = mvfeature1
-            quant_mv2 = mvfeature2
-        elif compress_type == "train_compress":
-            z_mv1 = self.mvpriorEncoder(mvfeature1)
-            z_mv2 = self.mvpriorEncoder(mvfeature2)
-            compressed_z_mv1 = self.train_quantize(z_mv1)
-            compressed_z_mv2 = self.train_quantize(z_mv2)
-            params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
-            params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
-            quant_mv1 = self.train_quantize(mvfeature1)
-            quant_mv2 = self.train_quantize(mvfeature2)
+        if compress_type == "train_compress":
+            # z_mv1 = self.mvpriorEncoder(mvfeature1)
+            # z_mv2 = self.mvpriorEncoder(mvfeature2)
+            z_mv = self.mvpriorEncoder(mvfeature)
+            # compressed_z_mv1 = self.train_quantize(z_mv1)
+            # compressed_z_mv2 = self.train_quantize(z_mv2)
+            compressed_z_mv = self.train_quantize(z_mv)
+            # params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
+            # params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
+            params_mv = self.mvpriorDecoder(compressed_z_mv)
+            # quant_mv1 = self.train_quantize(mvfeature1)
+            # quant_mv2 = self.train_quantize(mvfeature2)
+            quant_mv = self.train_quantize(mvfeature)
         elif compress_type == "full":
             z_mv1 = self.mvpriorEncoder(mvfeature1)
             z_mv2 = self.mvpriorEncoder(mvfeature2)
@@ -703,21 +790,48 @@ class DCVC_net(nn.Module):
         else:
             raise ValueError("Unknown compress type", compress_type)
 
-        ctx_params_mv1 = self.auto_regressive_mv(quant_mv1)
-        gaussian_params_mv1 = self.entropy_parameters_mv(
-            torch.cat((params_mv1, ctx_params_mv1), dim=1)
-        )
-        means_hat_mv1, scales_hat_mv1 = gaussian_params_mv1.chunk(2, 1)
-        ctx_params_mv2 = self.auto_regressive_mv(quant_mv2)
-        gaussian_params_mv2 = self.entropy_parameters_mv(
-            torch.cat((params_mv2, ctx_params_mv2), dim=1)
-        )
-        means_hat_mv2, scales_hat_mv2 = gaussian_params_mv2.chunk(2, 1)
+        # ctx_params_mv1 = self.auto_regressive_mv(quant_mv1)
+        # gaussian_params_mv1 = self.entropy_parameters_mv(
+        #     torch.cat((params_mv1, ctx_params_mv1), dim=1)
+        # )
+        # means_hat_mv1, scales_hat_mv1 = gaussian_params_mv1.chunk(2, 1)
+        # ctx_params_mv2 = self.auto_regressive_mv(quant_mv2)
+        # gaussian_params_mv2 = self.entropy_parameters_mv(
+        #     torch.cat((params_mv2, ctx_params_mv2), dim=1)
+        # )
+        # means_hat_mv2, scales_hat_mv2 = gaussian_params_mv2.chunk(2, 1)
 
-        quant_mv_upsample1 = self.mvDecoder_part1(quant_mv1)
-        quant_mv_upsample2 = self.mvDecoder_part1(quant_mv2)
-        quant_mv_upsample_refine1 = self.mv_refine(referframe1, quant_mv_upsample1)
-        quant_mv_upsample_refine2 = self.mv_refine(referframe2, quant_mv_upsample2)
+        # quant_mv_upsample1 = self.mvDecoder_part1(quant_mv1)
+        # quant_mv_upsample2 = self.mvDecoder_part1(quant_mv2)
+        quant_mv_upsample = self.mvDecoder_part1(quant_mv)
+        # quant_mv_upsample_refine1 = self.mv_refine(referframe1, quant_mv_upsample1)
+        # quant_mv_upsample_refine2 = self.mv_refine(referframe2, quant_mv_upsample2)
+        quant_mv_upsample_refine1, quant_mv_upsample_refine2 = torch.chunk(
+            quant_mv_upsample, chunks=2, dim=1
+        )
+        quant_mv_upsample_refine1 = self.mv_refine(
+            referframe1, quant_mv_upsample_refine1
+        )
+        quant_mv_upsample_refine2 = self.mv_refine(
+            referframe2, quant_mv_upsample_refine2
+        )
+
+        if train_type == "memc":
+            pred1 = flow_warp(referframe1, quant_mv_upsample_refine1)
+            pred2 = flow_warp(referframe2, quant_mv_upsample_refine2)
+            return {"pred1": pred1, "pred2": pred2}
+        elif train_type == "memc_bpp":
+            pred1 = flow_warp(referframe1, quant_mv_upsample_refine1)
+            pred2 = flow_warp(referframe2, quant_mv_upsample_refine2)
+            total_bits_z_mv, total_bits_mv = self.est_mv_bits(
+                mvfeature, quant_mv, params_mv, compressed_z_mv, compress_type
+            )
+            return {
+                "pred1": pred1,
+                "pred2": pred2,
+                "mv_z_bpp": total_bits_z_mv / pixel_num,
+                "mv_y_bpp": total_bits_mv / pixel_num,
+            }
 
         context1 = self.motioncompensation(referframe1, quant_mv_upsample_refine1)
         context2 = self.motioncompensation(referframe2, quant_mv_upsample_refine2)
@@ -730,13 +844,7 @@ class DCVC_net(nn.Module):
             torch.cat((input_image, context1, context2), dim=1)
         )
 
-        if compress_type == "no_compress":
-            z = self.priorEncoder(feature)
-            compressed_z = z
-            params = self.priorDecoder(compressed_z)
-            feature_renorm = feature
-            compressed_y_renorm = feature_renorm
-        elif compress_type == "train_compress":
+        if compress_type == "train_compress":
             z = self.priorEncoder(feature)
             compressed_z = self.train_quantize(z)
             params = self.priorDecoder(compressed_z)
@@ -751,36 +859,33 @@ class DCVC_net(nn.Module):
         else:
             raise ValueError("Unknown compress type", compress_type)
 
-        ctx_params = self.auto_regressive(compressed_y_renorm)
-        gaussian_params = self.entropy_parameters(
-            torch.cat((temporal_prior_params, params, ctx_params), dim=1)
-        )
-        means_hat, scales_hat = gaussian_params.chunk(2, 1)
-
         recon_image_feature = self.contextualDecoder_part1(compressed_y_renorm)
         recon_image = self.contextualDecoder_part2(
             torch.cat((recon_image_feature, context1, context2), dim=1)
         )
 
+        if train_type == "recon":
+            return {"recon_image": recon_image}
+
+        # BPP Calculations
+        total_bits_z_mv, total_bits_mv = self.est_mv_bits(
+            mvfeature, quant_mv, params_mv, compressed_z_mv, compress_type
+        )
+
+        ctx_params = self.auto_regressive(compressed_y_renorm)
+        gaussian_params = self.entropy_parameters(
+            torch.cat((temporal_prior_params, params, ctx_params), dim=1)
+        )
+        means_hat, scales_hat = gaussian_params.chunk(2, 1)
         total_bits_y, _ = self.feature_probs_based_sigma(
             feature_renorm, means_hat, scales_hat, compress_type
         )
-        total_bits_mv1, _ = self.feature_probs_based_sigma(
-            mvfeature1, means_hat_mv1, scales_hat_mv1, compress_type
-        )
-        total_bits_mv2, _ = self.feature_probs_based_sigma(
-            mvfeature2, means_hat_mv2, scales_hat_mv2, compress_type
-        )
         total_bits_z, _ = self.iclr18_estrate_bits_z(compressed_z)
-        total_bits_z_mv1, _ = self.iclr18_estrate_bits_z_mv(compressed_z_mv1)
-        total_bits_z_mv2, _ = self.iclr18_estrate_bits_z_mv(compressed_z_mv2)
 
-        im_shape = input_image.size()
-        pixel_num = im_shape[0] * im_shape[2] * im_shape[3]
+        bpp_mv_z = total_bits_z_mv / pixel_num
+        bpp_mv_y = total_bits_mv / pixel_num
         bpp_y = total_bits_y / pixel_num
         bpp_z = total_bits_z / pixel_num
-        bpp_mv_y = (total_bits_mv1 + total_bits_mv2) / pixel_num
-        bpp_mv_z = (total_bits_z_mv1 + total_bits_z_mv2) / pixel_num
 
         bpp = bpp_y + bpp_z + bpp_mv_y + bpp_mv_z
 
@@ -791,8 +896,6 @@ class DCVC_net(nn.Module):
             "bpp_z": bpp_z,
             "bpp": bpp,
             "recon_image": recon_image,
-            "context1": context1,
-            "context2": context2,
         }
 
     def load_dict(self, pretrained_dict):
