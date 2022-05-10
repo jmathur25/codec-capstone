@@ -1,4 +1,8 @@
 wandb/
+uvg/
+vimeo_septuplet/
+recon_bin_folder_psnr/
+checkpoints/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
