@@ -1,0 +1,21 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.8.13",
+    "heartbeatAt": "2022-05-10T08:38:10.374526",
+    "startedAt": "2022-05-10T08:38:07.068933",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": null,
+    "state": "running",
+    "program": "<python with no main file>",
+    "git": {
+        "remote": "https://github.com/jmather625/codec-capstone.git",
+        "commit": "75625f0d2aae3e53dee165f89d965a193fbb55dd"
+    },
+    "email": "imathur3@illinois.edu",
+    "root": "/Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr",
+    "host": "Ishaans-MacBook-Pro.local",
+    "username": "ishaan",
+    "executable": "/Users/ishaan/opt/anaconda3/envs/dcvc/bin/python"
+}

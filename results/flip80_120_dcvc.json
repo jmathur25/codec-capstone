@@ -1,0 +1,20 @@
+{
+  "UVG": {
+    "Beauty_PNG_1024": {
+      "model_dcvc_quality_3_psnr.pth": {
+        "i_frame_num": 10,
+        "p_frame_num": 110,
+        "ave_i_frame_bpp": 0.044921875,
+        "ave_i_frame_quality": 35.90049514770508,
+        "ave_p_frame_bpp": 0.05381747159090909,
+        "ave_p_frame_bpp_mv_y": 0.017915482954545453,
+        "ave_p_frame_bpp_mv_z": 0.00390625,
+        "ave_p_frame_bpp_y": 0.026136363636363635,
+        "ave_p_frame_bpp_z": 0.005859375,
+        "ave_p_frame_quality": 34.68097270618785,
+        "ave_all_frame_bpp": 0.053076171875,
+        "ave_all_frame_quality": 34.78259957631429
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.12.16
+    framework: torch
+    is_jupyter_run: true
+    is_kaggle_kernel: false
+    python_version: 3.8.13
+    start_time: 1652171268
+    t:
+      1:
+      - 1
+      - 41
+      - 55
+      2:
+      - 1
+      - 41
+      - 55
+      3:
+      - 2
+      - 13
+      - 16
+      4: 3.8.13
+      5: 0.12.16
+      8:
+      - 1
+      - 5
+architecture:
+  desc: null
+  value: DCVC
+dataset:
+  desc: null
+  value: Vimeo-90k
+epochs:
+  desc: null
+  value: 100
+learning_rate:
+  desc: null
+  value: 0.0001
+resume:
+  desc: null
+  value: true

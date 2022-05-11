@@ -1,0 +1,214 @@
+vimeo_septuplet/sequences/00001/.DS_Store
+vimeo_septuplet/sequences/00001/0291
+vimeo_septuplet/sequences/00001/0622
+vimeo_septuplet/sequences/00001/0278
+vimeo_septuplet/sequences/00001/0285
+vimeo_septuplet/sequences/00001/0268
+vimeo_septuplet/sequences/00001/0266
+vimeo_septuplet/sequences/00001/0287
+vimeo_septuplet/sequences/00001/0619
+vimeo_septuplet/sequences/00001/0275
+The model has 7944448 trainable parameters
+vimeo_septuplet/sequences/00001/0291
+vimeo_septuplet/sequences/00001/0622
+vimeo_septuplet/sequences/00001/0278
+vimeo_septuplet/sequences/00001/0285
+vimeo_septuplet/sequences/00001/0268
+vimeo_septuplet/sequences/00001/0266
+vimeo_septuplet/sequences/00001/0287
+vimeo_septuplet/sequences/00001/0619
+vimeo_septuplet/sequences/00001/0275
+The model has 7944448 trainable parameters
+  0%|          | 0/9 [00:00<?, ?it/s]
+vimeo_septuplet/sequences/00001/0291
+vimeo_septuplet/sequences/00001/0622
+vimeo_septuplet/sequences/00001/0278
+vimeo_septuplet/sequences/00001/0285
+vimeo_septuplet/sequences/00001/0268
+vimeo_septuplet/sequences/00001/0266
+vimeo_septuplet/sequences/00001/0287
+vimeo_septuplet/sequences/00001/0619
+vimeo_septuplet/sequences/00001/0275
+The model has 7944448 trainable parameters
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.596586, 0.054241, 0.290059): 100%|██████████| 9/9 [01:34<00:00, 10.52s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.68549, 0.053809, 0.096833): 100%|██████████| 9/9 [01:21<00:00,  9.05s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (41.837742, 0.060076, 0.111628): 100%|██████████| 9/9 [01:19<00:00,  8.87s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.863766, 0.059353, 0.1041): 100%|██████████| 9/9 [01:18<00:00,  8.74s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.413106, 0.067534, 0.071266): 100%|██████████| 9/9 [01:18<00:00,  8.75s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (41.592343, 0.075367, 0.243876): 100%|██████████| 9/9 [01:18<00:00,  8.75s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.056497, 0.078416, 0.044493): 100%|██████████| 9/9 [01:18<00:00,  8.75s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (43.194841, 0.064473, 0.11833): 100%|██████████| 9/9 [01:18<00:00,  8.75s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.530699, 0.085155, 0.248313): 100%|██████████| 9/9 [01:18<00:00,  8.76s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.633594, 0.086626, 0.18787): 100%|██████████| 9/9 [01:18<00:00,  8.76s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.664004, 0.08823, 0.079829): 100%|██████████| 9/9 [01:18<00:00,  8.76s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.317262, 0.094724, 0.146881): 100%|██████████| 9/9 [01:18<00:00,  8.77s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (43.14265, 0.097803, 0.075527): 100%|██████████| 9/9 [01:18<00:00,  8.75s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.341744, 0.117308, 0.150291): 100%|██████████| 9/9 [01:18<00:00,  8.75s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.528095, 0.118761, 0.247208): 100%|██████████| 9/9 [01:18<00:00,  8.76s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (43.234947, 0.124704, 0.303288): 100%|██████████| 9/9 [01:18<00:00,  8.74s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.900047, 0.145228, 0.359459): 100%|██████████| 9/9 [01:18<00:00,  8.76s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.562952, 0.162048, 0.292941): 100%|██████████| 9/9 [01:18<00:00,  8.75s/it]
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (42.406951, 0.176883, 0.310825): 100%|██████████| 9/9 [01:18<00:00,  8.76s/it]
+
+
+
+
+
+
+
+
+
+Avg PSNR/Bitrate, Batch Loss: (41.6214, 0.196998, 0.196612): 100%|██████████| 9/9 [01:18<00:00,  8.74s/it]
+wandb: Network error (ReadTimeout), entering retry loop.

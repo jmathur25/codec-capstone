@@ -1,0 +1,231 @@
+2022-05-10 04:04:37,675 INFO    MainThread:10012 [internal.py:wandb_internal():90] W&B internal server running at pid: 10012, started at: 2022-05-10 04:04:37.675382
+2022-05-10 04:04:37,678 INFO    WriterThread:10012 [datastore.py:open_for_write():75] open: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/run-fjfyt7is.wandb
+2022-05-10 04:04:37,681 DEBUG   SenderThread:10012 [sender.py:send():232] send: header
+2022-05-10 04:04:37,681 DEBUG   SenderThread:10012 [sender.py:send():232] send: run
+2022-05-10 04:04:40,322 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: check_version
+2022-05-10 04:04:40,330 INFO    SenderThread:10012 [dir_watcher.py:__init__():197] watching files in: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files
+2022-05-10 04:04:40,331 INFO    SenderThread:10012 [sender.py:_start_run_threads():811] run started: fjfyt7is with start time 1652173475
+2022-05-10 04:04:40,331 DEBUG   SenderThread:10012 [sender.py:send():232] send: summary
+2022-05-10 04:04:40,331 INFO    SenderThread:10012 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 04:04:40,331 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: check_version
+2022-05-10 04:04:40,530 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: run_start
+2022-05-10 04:04:40,535 DEBUG   HandlerThread:10012 [meta.py:__init__():35] meta init
+2022-05-10 04:04:40,535 DEBUG   HandlerThread:10012 [meta.py:__init__():49] meta init done
+2022-05-10 04:04:40,535 DEBUG   HandlerThread:10012 [meta.py:probe():209] probe
+2022-05-10 04:04:40,539 DEBUG   HandlerThread:10012 [meta.py:_setup_git():199] setup git
+2022-05-10 04:04:40,613 DEBUG   HandlerThread:10012 [meta.py:_setup_git():206] setup git done
+2022-05-10 04:04:40,614 DEBUG   HandlerThread:10012 [meta.py:_save_pip():53] save pip
+2022-05-10 04:04:40,616 DEBUG   HandlerThread:10012 [meta.py:_save_pip():67] save pip done
+2022-05-10 04:04:40,616 DEBUG   HandlerThread:10012 [meta.py:_save_conda():74] save conda
+2022-05-10 04:04:41,336 INFO    Thread-7  :10012 [dir_watcher.py:_on_file_created():244] file/dir created: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/conda-environment.yaml
+2022-05-10 04:04:41,337 INFO    Thread-7  :10012 [dir_watcher.py:_on_file_created():244] file/dir created: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/wandb-summary.json
+2022-05-10 04:04:41,337 INFO    Thread-7  :10012 [dir_watcher.py:_on_file_created():244] file/dir created: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/requirements.txt
+2022-05-10 04:04:43,586 DEBUG   HandlerThread:10012 [meta.py:_save_conda():84] save conda done
+2022-05-10 04:04:43,587 DEBUG   HandlerThread:10012 [meta.py:probe():247] probe done
+2022-05-10 04:04:43,593 DEBUG   SenderThread:10012 [sender.py:send():232] send: files
+2022-05-10 04:04:43,593 INFO    SenderThread:10012 [sender.py:_save_file():948] saving file wandb-metadata.json with policy now
+2022-05-10 04:04:43,606 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 04:04:43,606 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 04:04:43,641 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: pause
+2022-05-10 04:04:43,641 INFO    HandlerThread:10012 [handler.py:handle_request_pause():695] stopping system metrics thread
+2022-05-10 04:04:43,896 DEBUG   SenderThread:10012 [sender.py:send():232] send: telemetry
+2022-05-10 04:04:43,896 DEBUG   SenderThread:10012 [sender.py:send():232] send: stats
+2022-05-10 04:04:44,269 INFO    Thread-11 :10012 [upload_job.py:push():132] Uploaded file /var/folders/r9/5rt98_116hj5pp9dld30nzwh0000gn/T/tmpvg8o429mwandb/2ajpun9k-wandb-metadata.json
+2022-05-10 04:04:44,342 INFO    Thread-7  :10012 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/conda-environment.yaml
+2022-05-10 04:04:44,342 INFO    Thread-7  :10012 [dir_watcher.py:_on_file_created():244] file/dir created: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/output.log
+2022-05-10 04:04:44,343 INFO    Thread-7  :10012 [dir_watcher.py:_on_file_created():244] file/dir created: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/wandb-metadata.json
+2022-05-10 04:04:47,306 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: resume
+2022-05-10 04:04:47,306 INFO    HandlerThread:10012 [handler.py:handle_request_resume():686] starting system metrics thread
+2022-05-10 04:04:47,311 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: pause
+2022-05-10 04:04:47,311 INFO    HandlerThread:10012 [handler.py:handle_request_pause():695] stopping system metrics thread
+2022-05-10 04:04:47,413 DEBUG   SenderThread:10012 [sender.py:send():232] send: stats
+2022-05-10 04:04:50,362 INFO    Thread-7  :10012 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/output.log
+2022-05-10 04:04:56,091 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: resume
+2022-05-10 04:04:56,092 INFO    HandlerThread:10012 [handler.py:handle_request_resume():686] starting system metrics thread
+2022-05-10 04:04:56,093 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: pause
+2022-05-10 04:04:56,093 INFO    HandlerThread:10012 [handler.py:handle_request_pause():695] stopping system metrics thread
+2022-05-10 04:04:56,199 DEBUG   SenderThread:10012 [sender.py:send():232] send: stats
+2022-05-10 04:04:58,901 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 04:04:58,901 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 04:05:03,417 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: resume
+2022-05-10 04:05:03,417 INFO    HandlerThread:10012 [handler.py:handle_request_resume():686] starting system metrics thread
+2022-05-10 04:05:03,556 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: pause
+2022-05-10 04:05:03,557 INFO    HandlerThread:10012 [handler.py:handle_request_pause():695] stopping system metrics thread
+2022-05-10 04:05:03,626 DEBUG   SenderThread:10012 [sender.py:send():232] send: stats
+2022-05-10 04:05:06,405 INFO    Thread-7  :10012 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/output.log
+2022-05-10 04:05:09,416 INFO    Thread-7  :10012 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/config.yaml
+2022-05-10 04:05:14,100 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 04:05:14,101 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 04:05:21,534 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: resume
+2022-05-10 04:05:21,534 INFO    HandlerThread:10012 [handler.py:handle_request_resume():686] starting system metrics thread
+2022-05-10 04:05:21,758 DEBUG   SenderThread:10012 [sender.py:send():232] send: telemetry
+2022-05-10 04:05:21,761 DEBUG   SenderThread:10012 [sender.py:send():232] send: telemetry
+2022-05-10 04:05:21,830 DEBUG   SenderThread:10012 [sender.py:send():232] send: exit
+2022-05-10 04:05:21,830 INFO    SenderThread:10012 [sender.py:send_exit():368] handling exit code: 0
+2022-05-10 04:05:21,831 INFO    SenderThread:10012 [sender.py:send_exit():370] handling runtime: 3
+2022-05-10 04:05:21,832 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:21,832 INFO    SenderThread:10012 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 04:05:21,833 INFO    SenderThread:10012 [sender.py:send_exit():376] send defer
+2022-05-10 04:05:21,833 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:21,833 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 04:05:21,834 INFO    HandlerThread:10012 [handler.py:handle_request_defer():164] handle defer: 0
+2022-05-10 04:05:21,834 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: defer
+2022-05-10 04:05:21,834 INFO    SenderThread:10012 [sender.py:send_request_defer():385] handle sender defer: 0
+2022-05-10 04:05:21,834 INFO    SenderThread:10012 [sender.py:transition_state():389] send defer: 1
+2022-05-10 04:05:21,835 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 04:05:21,835 INFO    HandlerThread:10012 [handler.py:handle_request_defer():164] handle defer: 1
+2022-05-10 04:05:21,842 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: defer
+2022-05-10 04:05:21,842 INFO    SenderThread:10012 [sender.py:send_request_defer():385] handle sender defer: 1
+2022-05-10 04:05:21,843 INFO    SenderThread:10012 [sender.py:transition_state():389] send defer: 2
+2022-05-10 04:05:21,843 DEBUG   SenderThread:10012 [sender.py:send():232] send: stats
+2022-05-10 04:05:21,843 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 04:05:21,843 INFO    HandlerThread:10012 [handler.py:handle_request_defer():164] handle defer: 2
+2022-05-10 04:05:21,843 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: defer
+2022-05-10 04:05:21,843 INFO    SenderThread:10012 [sender.py:send_request_defer():385] handle sender defer: 2
+2022-05-10 04:05:21,844 INFO    SenderThread:10012 [sender.py:transition_state():389] send defer: 3
+2022-05-10 04:05:21,844 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 04:05:21,844 INFO    HandlerThread:10012 [handler.py:handle_request_defer():164] handle defer: 3
+2022-05-10 04:05:21,844 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: defer
+2022-05-10 04:05:21,844 INFO    SenderThread:10012 [sender.py:send_request_defer():385] handle sender defer: 3
+2022-05-10 04:05:21,844 INFO    SenderThread:10012 [sender.py:transition_state():389] send defer: 4
+2022-05-10 04:05:21,844 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 04:05:21,844 INFO    HandlerThread:10012 [handler.py:handle_request_defer():164] handle defer: 4
+2022-05-10 04:05:21,845 DEBUG   SenderThread:10012 [sender.py:send():232] send: summary
+2022-05-10 04:05:21,846 INFO    SenderThread:10012 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 04:05:21,846 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: defer
+2022-05-10 04:05:21,846 INFO    SenderThread:10012 [sender.py:send_request_defer():385] handle sender defer: 4
+2022-05-10 04:05:21,846 INFO    SenderThread:10012 [sender.py:transition_state():389] send defer: 5
+2022-05-10 04:05:21,847 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 04:05:21,847 INFO    HandlerThread:10012 [handler.py:handle_request_defer():164] handle defer: 5
+2022-05-10 04:05:21,847 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: defer
+2022-05-10 04:05:21,847 INFO    SenderThread:10012 [sender.py:send_request_defer():385] handle sender defer: 5
+2022-05-10 04:05:21,939 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:22,098 INFO    SenderThread:10012 [sender.py:transition_state():389] send defer: 6
+2022-05-10 04:05:22,098 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:22,098 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 04:05:22,099 INFO    HandlerThread:10012 [handler.py:handle_request_defer():164] handle defer: 6
+2022-05-10 04:05:22,099 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: defer
+2022-05-10 04:05:22,099 INFO    SenderThread:10012 [sender.py:send_request_defer():385] handle sender defer: 6
+2022-05-10 04:05:22,099 INFO    SenderThread:10012 [dir_watcher.py:finish():312] shutting down directory watcher
+2022-05-10 04:05:22,203 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:22,445 INFO    SenderThread:10012 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/output.log
+2022-05-10 04:05:22,446 INFO    SenderThread:10012 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/wandb-summary.json
+2022-05-10 04:05:22,446 INFO    SenderThread:10012 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/config.yaml
+2022-05-10 04:05:22,446 INFO    SenderThread:10012 [dir_watcher.py:finish():342] scan: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files
+2022-05-10 04:05:22,446 INFO    SenderThread:10012 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/requirements.txt requirements.txt
+2022-05-10 04:05:22,446 INFO    SenderThread:10012 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/output.log output.log
+2022-05-10 04:05:22,450 INFO    SenderThread:10012 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/config.yaml config.yaml
+2022-05-10 04:05:22,452 INFO    SenderThread:10012 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/wandb-summary.json wandb-summary.json
+2022-05-10 04:05:22,459 INFO    SenderThread:10012 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/conda-environment.yaml conda-environment.yaml
+2022-05-10 04:05:22,464 INFO    SenderThread:10012 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/wandb-metadata.json wandb-metadata.json
+2022-05-10 04:05:22,464 INFO    SenderThread:10012 [sender.py:transition_state():389] send defer: 7
+2022-05-10 04:05:22,465 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:22,469 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 04:05:22,469 INFO    HandlerThread:10012 [handler.py:handle_request_defer():164] handle defer: 7
+2022-05-10 04:05:22,470 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: defer
+2022-05-10 04:05:22,470 INFO    SenderThread:10012 [sender.py:send_request_defer():385] handle sender defer: 7
+2022-05-10 04:05:22,470 INFO    SenderThread:10012 [file_pusher.py:finish():145] shutting down file pusher
+2022-05-10 04:05:22,571 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:22,572 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:22,677 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:22,677 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:22,780 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:22,780 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:22,886 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:22,887 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:22,991 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:22,991 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:23,093 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:23,094 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:23,196 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:23,197 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:23,303 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:23,303 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:23,407 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:23,407 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:23,512 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:23,513 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:23,616 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:23,616 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:23,721 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:23,721 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:23,823 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:23,824 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:23,933 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:23,934 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:24,050 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:24,050 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:24,156 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:24,156 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:24,258 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:24,259 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:24,364 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:24,365 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:24,469 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:24,469 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:24,574 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:24,574 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:24,679 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:24,679 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:24,781 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:24,781 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:24,886 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:24,887 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:24,989 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:24,989 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:25,096 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:25,096 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:25,199 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:25,199 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:25,332 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:25,347 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:25,457 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:25,457 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:25,561 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:25,561 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:25,663 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:25,663 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:25,753 INFO    Thread-19 :10012 [upload_job.py:push():132] Uploaded file /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/wandb-summary.json
+2022-05-10 04:05:25,764 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:25,765 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:25,788 INFO    Thread-16 :10012 [upload_job.py:push():132] Uploaded file /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/requirements.txt
+2022-05-10 04:05:25,804 INFO    Thread-18 :10012 [upload_job.py:push():132] Uploaded file /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/config.yaml
+2022-05-10 04:05:25,839 INFO    Thread-20 :10012 [upload_job.py:push():132] Uploaded file /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/conda-environment.yaml
+2022-05-10 04:05:25,871 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:25,871 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:25,904 INFO    Thread-17 :10012 [upload_job.py:push():132] Uploaded file /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/files/output.log
+2022-05-10 04:05:25,974 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:25,974 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:26,077 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:26,078 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:26,109 INFO    Thread-6  :10012 [sender.py:transition_state():389] send defer: 8
+2022-05-10 04:05:26,110 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 04:05:26,110 INFO    HandlerThread:10012 [handler.py:handle_request_defer():164] handle defer: 8
+2022-05-10 04:05:26,110 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: defer
+2022-05-10 04:05:26,110 INFO    SenderThread:10012 [sender.py:send_request_defer():385] handle sender defer: 8
+2022-05-10 04:05:26,182 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:26,197 INFO    SenderThread:10012 [sender.py:transition_state():389] send defer: 9
+2022-05-10 04:05:26,197 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:26,198 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 04:05:26,198 INFO    HandlerThread:10012 [handler.py:handle_request_defer():164] handle defer: 9
+2022-05-10 04:05:26,198 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: defer
+2022-05-10 04:05:26,198 INFO    SenderThread:10012 [sender.py:send_request_defer():385] handle sender defer: 9
+2022-05-10 04:05:26,198 INFO    SenderThread:10012 [sender.py:transition_state():389] send defer: 10
+2022-05-10 04:05:26,199 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 04:05:26,199 INFO    HandlerThread:10012 [handler.py:handle_request_defer():164] handle defer: 10
+2022-05-10 04:05:26,199 DEBUG   SenderThread:10012 [sender.py:send():232] send: final
+2022-05-10 04:05:26,199 DEBUG   SenderThread:10012 [sender.py:send():232] send: footer
+2022-05-10 04:05:26,199 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: defer
+2022-05-10 04:05:26,199 INFO    SenderThread:10012 [sender.py:send_request_defer():385] handle sender defer: 10
+2022-05-10 04:05:26,302 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 04:05:26,303 DEBUG   SenderThread:10012 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 04:05:26,303 INFO    SenderThread:10012 [file_pusher.py:join():150] waiting for file pusher
+2022-05-10 04:05:26,832 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: sampled_history
+2022-05-10 04:05:26,833 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: get_summary
+2022-05-10 04:05:26,834 DEBUG   HandlerThread:10012 [handler.py:handle_request():141] handle_request: shutdown
+2022-05-10 04:05:26,834 INFO    HandlerThread:10012 [handler.py:finish():806] shutting down handler
+2022-05-10 04:05:27,199 INFO    WriterThread:10012 [datastore.py:close():279] close: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_040435-fjfyt7is/run-fjfyt7is.wandb
+2022-05-10 04:05:27,728 INFO    SenderThread:10012 [sender.py:finish():1110] shutting down sender
+2022-05-10 04:05:27,728 INFO    SenderThread:10012 [file_pusher.py:finish():145] shutting down file pusher
+2022-05-10 04:05:27,728 INFO    SenderThread:10012 [file_pusher.py:join():150] waiting for file pusher
+2022-05-10 04:05:27,824 INFO    MainThread:10012 [internal.py:handle_exit():80] Internal process exited

@@ -1,0 +1,624 @@
+2022-05-10 03:38:44,207 INFO    MainThread:9411 [internal.py:wandb_internal():90] W&B internal server running at pid: 9411, started at: 2022-05-10 03:38:44.207280
+2022-05-10 03:38:44,212 INFO    WriterThread:9411 [datastore.py:open_for_write():75] open: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/run-198yj745.wandb
+2022-05-10 03:38:44,214 DEBUG   SenderThread:9411 [sender.py:send():232] send: header
+2022-05-10 03:38:44,214 DEBUG   SenderThread:9411 [sender.py:send():232] send: run
+2022-05-10 03:38:44,660 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: check_version
+2022-05-10 03:38:44,671 INFO    SenderThread:9411 [dir_watcher.py:__init__():197] watching files in: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files
+2022-05-10 03:38:44,671 INFO    SenderThread:9411 [sender.py:_start_run_threads():811] run started: 198yj745 with start time 1652171921
+2022-05-10 03:38:44,671 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:38:44,672 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:38:44,672 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: check_version
+2022-05-10 03:38:44,910 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: run_start
+2022-05-10 03:38:44,912 DEBUG   HandlerThread:9411 [meta.py:__init__():35] meta init
+2022-05-10 03:38:44,912 DEBUG   HandlerThread:9411 [meta.py:__init__():49] meta init done
+2022-05-10 03:38:44,913 DEBUG   HandlerThread:9411 [meta.py:probe():209] probe
+2022-05-10 03:38:44,916 DEBUG   HandlerThread:9411 [meta.py:_setup_git():199] setup git
+2022-05-10 03:38:44,960 DEBUG   HandlerThread:9411 [meta.py:_setup_git():206] setup git done
+2022-05-10 03:38:44,961 DEBUG   HandlerThread:9411 [meta.py:_save_pip():53] save pip
+2022-05-10 03:38:44,962 DEBUG   HandlerThread:9411 [meta.py:_save_pip():67] save pip done
+2022-05-10 03:38:44,962 DEBUG   HandlerThread:9411 [meta.py:_save_conda():74] save conda
+2022-05-10 03:38:45,678 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_created():244] file/dir created: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/conda-environment.yaml
+2022-05-10 03:38:45,679 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_created():244] file/dir created: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:38:45,679 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_created():244] file/dir created: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/requirements.txt
+2022-05-10 03:38:47,682 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/conda-environment.yaml
+2022-05-10 03:38:47,748 DEBUG   HandlerThread:9411 [meta.py:_save_conda():84] save conda done
+2022-05-10 03:38:47,748 DEBUG   HandlerThread:9411 [meta.py:probe():247] probe done
+2022-05-10 03:38:47,756 DEBUG   SenderThread:9411 [sender.py:send():232] send: files
+2022-05-10 03:38:47,757 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-metadata.json with policy now
+2022-05-10 03:38:47,772 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:38:47,772 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:38:47,794 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: pause
+2022-05-10 03:38:47,794 INFO    HandlerThread:9411 [handler.py:handle_request_pause():695] stopping system metrics thread
+2022-05-10 03:38:48,142 DEBUG   SenderThread:9411 [sender.py:send():232] send: telemetry
+2022-05-10 03:38:48,142 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:38:48,672 INFO    Thread-11 :9411 [upload_job.py:push():132] Uploaded file /var/folders/r9/5rt98_116hj5pp9dld30nzwh0000gn/T/tmp5u6hi4h9wandb/3dlssjvz-wandb-metadata.json
+2022-05-10 03:38:48,684 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_created():244] file/dir created: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-metadata.json
+2022-05-10 03:38:48,685 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_created():244] file/dir created: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:38:50,421 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: resume
+2022-05-10 03:38:50,422 INFO    HandlerThread:9411 [handler.py:handle_request_resume():686] starting system metrics thread
+2022-05-10 03:38:50,426 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: pause
+2022-05-10 03:38:50,426 INFO    HandlerThread:9411 [handler.py:handle_request_pause():695] stopping system metrics thread
+2022-05-10 03:38:50,527 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:38:52,695 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:38:55,303 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: resume
+2022-05-10 03:38:55,303 INFO    HandlerThread:9411 [handler.py:handle_request_resume():686] starting system metrics thread
+2022-05-10 03:38:55,305 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: pause
+2022-05-10 03:38:55,305 INFO    HandlerThread:9411 [handler.py:handle_request_pause():695] stopping system metrics thread
+2022-05-10 03:38:55,410 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:38:58,620 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: resume
+2022-05-10 03:38:58,620 INFO    HandlerThread:9411 [handler.py:handle_request_resume():686] starting system metrics thread
+2022-05-10 03:39:00,725 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:39:03,144 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:39:03,144 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:39:09,080 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:39:09,082 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:39:09,082 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:39:09,084 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:39:09,753 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:39:10,755 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:39:15,773 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/config.yaml
+2022-05-10 03:39:18,370 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:39:18,370 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:39:19,394 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:39:20,787 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:39:21,849 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:39:21,850 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:39:21,852 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:39:22,794 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:39:27,385 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:39:28,799 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:39:28,800 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:39:28,801 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:39:28,801 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:39:28,805 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:39:30,812 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:39:36,854 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:39:36,855 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:39:38,311 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:39:38,312 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:39:38,313 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:39:38,316 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:39:38,832 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:39:40,833 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:39:47,963 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:39:47,964 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:39:47,964 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:39:47,965 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:39:48,862 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:39:50,867 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:39:52,067 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:39:52,067 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:39:57,828 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:39:57,829 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:39:57,830 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:39:57,831 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:39:57,895 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:39:58,167 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:39:59,903 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:40:07,272 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:40:07,272 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:40:07,466 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:40:07,477 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:40:07,478 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:40:07,478 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:40:07,931 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:40:07,931 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:40:17,462 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:40:17,464 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:40:17,464 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:40:17,467 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:40:17,961 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:40:17,962 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:40:22,478 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:40:22,478 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:40:26,811 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:40:26,813 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:40:26,814 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:40:26,815 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:40:26,995 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:40:27,996 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:40:28,999 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:40:36,000 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:40:36,001 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:40:36,002 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:40:36,003 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:40:36,018 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:40:37,680 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:40:37,681 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:40:38,024 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:40:45,344 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:40:45,345 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:40:45,345 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:40:45,346 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:40:46,045 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:40:46,046 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:40:52,914 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:40:52,915 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:40:55,523 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:40:55,524 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:40:55,524 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:40:55,527 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:40:56,087 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:40:56,087 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:40:59,816 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:41:04,408 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:41:04,409 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:41:04,409 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:41:04,410 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:41:05,119 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:41:06,123 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:41:08,399 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:41:08,399 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:41:13,209 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:41:13,210 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:41:13,211 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:41:13,212 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:41:14,149 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:41:14,149 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:41:21,980 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:41:21,981 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:41:21,981 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:41:21,983 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:41:22,174 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:41:23,598 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:41:23,598 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:41:24,182 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:41:30,773 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:41:30,774 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:41:30,774 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:41:30,775 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:41:30,794 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:41:31,200 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:41:32,204 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:41:38,810 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:41:38,810 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:41:39,577 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:41:39,578 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:41:39,578 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:41:39,579 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:41:40,227 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:41:40,228 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:41:48,334 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:41:48,335 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:41:48,336 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:41:48,337 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:41:49,258 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:41:50,260 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:41:54,259 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:41:54,259 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:41:57,116 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:41:57,117 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:41:57,117 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:41:57,118 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:41:57,286 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:41:58,287 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:42:01,759 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:42:06,028 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:42:06,029 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:42:06,029 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:42:06,030 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:42:06,320 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:42:08,327 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:42:10,558 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:42:10,559 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:42:14,885 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:42:14,886 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:42:14,887 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:42:14,888 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:42:15,350 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:42:16,352 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:42:23,684 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:42:23,685 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:42:23,686 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:42:23,686 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:42:24,377 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:42:24,377 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:42:25,770 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:42:25,770 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:42:32,471 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:42:32,472 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:42:32,472 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:42:32,474 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:42:32,720 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:42:33,408 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:42:34,411 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:42:40,969 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:42:40,969 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:42:41,283 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:42:41,284 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:42:41,284 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:42:41,285 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:42:41,439 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:42:42,442 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:42:50,092 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:42:50,093 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:42:50,094 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:42:50,096 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:42:50,469 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:42:52,475 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:42:56,176 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:42:56,176 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:42:58,921 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:42:58,922 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:42:58,922 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:42:58,923 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:42:59,500 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:43:00,506 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:43:03,702 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:43:07,721 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:43:07,721 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:43:07,722 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:43:07,723 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:43:08,535 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:43:08,535 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:43:11,385 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:43:11,385 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:43:16,533 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:43:16,534 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:43:16,534 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:43:16,536 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:43:16,561 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:43:18,568 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:43:25,304 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:43:25,305 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:43:25,305 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:43:25,306 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:43:25,589 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:43:26,593 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:43:26,604 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:43:26,604 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:43:34,091 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:43:34,092 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:43:34,092 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:43:34,093 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:43:34,615 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:43:34,627 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:43:36,623 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:43:41,807 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:43:41,807 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:43:43,011 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:43:43,011 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:43:43,012 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:43:43,013 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:43:43,645 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:43:44,645 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:43:51,807 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:43:51,808 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:43:51,808 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:43:51,809 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:43:52,668 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:43:52,668 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:43:57,009 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:43:57,009 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:44:00,596 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:44:00,597 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:44:00,597 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:44:00,598 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:44:00,689 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:44:02,698 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:44:05,613 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:44:09,476 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:44:09,477 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:44:09,478 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:44:09,478 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:44:09,723 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:44:10,726 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:44:13,642 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:44:13,642 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:44:18,304 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:44:18,305 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:44:18,305 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:44:18,306 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:44:18,748 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:44:20,757 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:44:27,531 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:44:27,531 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:44:27,532 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:44:27,532 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:44:27,785 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:44:28,790 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:44:28,857 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:44:28,858 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:44:36,317 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:44:36,318 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:44:36,318 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:44:36,320 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:44:36,520 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:44:36,818 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:44:38,827 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:44:44,064 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:44:44,064 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:44:45,098 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:44:45,099 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:44:45,099 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:44:45,100 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:44:45,856 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:44:46,861 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:44:53,881 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:44:53,882 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:44:53,883 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:44:53,884 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:44:54,883 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:44:54,883 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:44:59,929 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:44:59,929 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:45:02,659 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:45:02,660 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:45:02,660 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:45:02,661 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:45:02,904 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:45:04,909 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:45:07,468 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:45:11,492 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:45:11,493 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:45:11,493 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:45:11,494 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:45:11,937 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:45:12,941 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:45:15,133 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:45:15,134 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:45:20,338 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:45:20,339 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:45:20,339 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:45:20,341 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:45:20,969 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:45:22,977 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:45:29,110 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:45:29,110 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:45:29,112 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:45:29,112 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:45:30,000 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:45:30,334 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:45:30,334 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:45:31,005 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:45:37,912 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:45:37,913 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:45:37,913 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:45:37,915 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:45:38,033 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:45:38,419 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:45:39,034 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:45:45,535 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:45:45,535 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:45:46,736 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:45:46,737 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:45:46,737 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:45:46,738 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:45:47,061 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:45:49,070 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:45:55,496 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:45:55,497 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:45:55,497 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:45:55,498 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:45:56,094 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:45:57,098 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:46:01,369 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:46:01,369 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:46:04,232 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:46:04,233 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:46:04,233 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:46:04,234 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:46:05,145 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:46:07,163 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:46:09,719 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:46:13,068 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:46:13,068 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:46:13,069 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:46:13,070 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:46:13,201 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:46:15,215 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:46:17,243 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:46:17,243 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:46:21,836 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:46:21,837 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:46:21,837 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:46:21,838 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:46:22,260 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:46:23,263 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:46:30,638 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: partial_history
+2022-05-10 03:46:30,639 DEBUG   SenderThread:9411 [sender.py:send():232] send: history
+2022-05-10 03:46:30,640 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:46:30,640 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:46:30,644 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: pause
+2022-05-10 03:46:30,644 INFO    HandlerThread:9411 [handler.py:handle_request_pause():695] stopping system metrics thread
+2022-05-10 03:46:30,732 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:46:31,325 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:46:32,867 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:46:32,867 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:46:33,344 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:46:48,083 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:46:48,084 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:47:03,296 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:47:03,296 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:47:20,625 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:47:20,625 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:47:35,830 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:47:35,831 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:47:51,040 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:47:51,040 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:48:07,519 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:48:07,519 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:48:22,724 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:48:22,724 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:48:38,053 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:48:38,054 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:48:53,253 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:48:53,253 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:49:08,457 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:49:08,458 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:49:23,659 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:49:23,659 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:49:38,859 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:49:38,860 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:49:54,073 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: stop_status
+2022-05-10 03:49:54,074 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: stop_status
+2022-05-10 03:50:06,868 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: resume
+2022-05-10 03:50:06,868 INFO    HandlerThread:9411 [handler.py:handle_request_resume():686] starting system metrics thread
+2022-05-10 03:50:06,870 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: pause
+2022-05-10 03:50:06,871 INFO    HandlerThread:9411 [handler.py:handle_request_pause():695] stopping system metrics thread
+2022-05-10 03:50:06,976 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:50:08,703 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: resume
+2022-05-10 03:50:08,703 INFO    HandlerThread:9411 [handler.py:handle_request_resume():686] starting system metrics thread
+2022-05-10 03:50:08,963 DEBUG   SenderThread:9411 [sender.py:send():232] send: telemetry
+2022-05-10 03:50:08,968 DEBUG   SenderThread:9411 [sender.py:send():232] send: telemetry
+2022-05-10 03:50:09,866 DEBUG   SenderThread:9411 [sender.py:send():232] send: exit
+2022-05-10 03:50:09,867 INFO    SenderThread:9411 [sender.py:send_exit():368] handling exit code: 0
+2022-05-10 03:50:09,869 INFO    SenderThread:9411 [sender.py:send_exit():370] handling runtime: 456
+2022-05-10 03:50:09,871 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:09,871 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:50:09,872 INFO    SenderThread:9411 [sender.py:send_exit():376] send defer
+2022-05-10 03:50:09,872 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:09,873 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 03:50:09,873 INFO    HandlerThread:9411 [handler.py:handle_request_defer():164] handle defer: 0
+2022-05-10 03:50:09,874 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: defer
+2022-05-10 03:50:09,874 INFO    SenderThread:9411 [sender.py:send_request_defer():385] handle sender defer: 0
+2022-05-10 03:50:09,874 INFO    SenderThread:9411 [sender.py:transition_state():389] send defer: 1
+2022-05-10 03:50:09,874 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 03:50:09,874 INFO    HandlerThread:9411 [handler.py:handle_request_defer():164] handle defer: 1
+2022-05-10 03:50:09,939 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: defer
+2022-05-10 03:50:09,939 INFO    SenderThread:9411 [sender.py:send_request_defer():385] handle sender defer: 1
+2022-05-10 03:50:09,939 INFO    SenderThread:9411 [sender.py:transition_state():389] send defer: 2
+2022-05-10 03:50:09,940 DEBUG   SenderThread:9411 [sender.py:send():232] send: stats
+2022-05-10 03:50:09,940 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 03:50:09,940 INFO    HandlerThread:9411 [handler.py:handle_request_defer():164] handle defer: 2
+2022-05-10 03:50:09,941 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: defer
+2022-05-10 03:50:09,941 INFO    SenderThread:9411 [sender.py:send_request_defer():385] handle sender defer: 2
+2022-05-10 03:50:09,941 INFO    SenderThread:9411 [sender.py:transition_state():389] send defer: 3
+2022-05-10 03:50:09,942 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 03:50:09,942 INFO    HandlerThread:9411 [handler.py:handle_request_defer():164] handle defer: 3
+2022-05-10 03:50:09,943 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: defer
+2022-05-10 03:50:09,943 INFO    SenderThread:9411 [sender.py:send_request_defer():385] handle sender defer: 3
+2022-05-10 03:50:09,943 INFO    SenderThread:9411 [sender.py:transition_state():389] send defer: 4
+2022-05-10 03:50:09,943 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 03:50:09,944 INFO    HandlerThread:9411 [handler.py:handle_request_defer():164] handle defer: 4
+2022-05-10 03:50:09,944 DEBUG   SenderThread:9411 [sender.py:send():232] send: summary
+2022-05-10 03:50:09,945 INFO    SenderThread:9411 [sender.py:_save_file():948] saving file wandb-summary.json with policy end
+2022-05-10 03:50:09,945 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: defer
+2022-05-10 03:50:09,945 INFO    SenderThread:9411 [sender.py:send_request_defer():385] handle sender defer: 4
+2022-05-10 03:50:09,945 INFO    SenderThread:9411 [sender.py:transition_state():389] send defer: 5
+2022-05-10 03:50:09,946 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 03:50:09,946 INFO    HandlerThread:9411 [handler.py:handle_request_defer():164] handle defer: 5
+2022-05-10 03:50:09,946 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: defer
+2022-05-10 03:50:09,946 INFO    SenderThread:9411 [sender.py:send_request_defer():385] handle sender defer: 5
+2022-05-10 03:50:09,975 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:10,177 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:50:10,177 INFO    Thread-7  :9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:50:10,245 INFO    SenderThread:9411 [sender.py:transition_state():389] send defer: 6
+2022-05-10 03:50:10,246 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:10,246 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 03:50:10,247 INFO    HandlerThread:9411 [handler.py:handle_request_defer():164] handle defer: 6
+2022-05-10 03:50:10,247 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: defer
+2022-05-10 03:50:10,247 INFO    SenderThread:9411 [sender.py:send_request_defer():385] handle sender defer: 6
+2022-05-10 03:50:10,247 INFO    SenderThread:9411 [dir_watcher.py:finish():312] shutting down directory watcher
+2022-05-10 03:50:10,348 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:11,181 INFO    SenderThread:9411 [dir_watcher.py:_on_file_modified():257] file/dir modified: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/config.yaml
+2022-05-10 03:50:11,182 INFO    SenderThread:9411 [dir_watcher.py:finish():342] scan: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files
+2022-05-10 03:50:11,182 INFO    SenderThread:9411 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/requirements.txt requirements.txt
+2022-05-10 03:50:11,183 INFO    SenderThread:9411 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log output.log
+2022-05-10 03:50:11,186 INFO    SenderThread:9411 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/config.yaml config.yaml
+2022-05-10 03:50:11,191 INFO    SenderThread:9411 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json wandb-summary.json
+2022-05-10 03:50:11,195 INFO    SenderThread:9411 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/conda-environment.yaml conda-environment.yaml
+2022-05-10 03:50:11,200 INFO    SenderThread:9411 [dir_watcher.py:finish():356] scan save: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-metadata.json wandb-metadata.json
+2022-05-10 03:50:11,201 INFO    SenderThread:9411 [sender.py:transition_state():389] send defer: 7
+2022-05-10 03:50:11,202 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:11,208 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 03:50:11,211 INFO    HandlerThread:9411 [handler.py:handle_request_defer():164] handle defer: 7
+2022-05-10 03:50:11,212 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: defer
+2022-05-10 03:50:11,212 INFO    SenderThread:9411 [sender.py:send_request_defer():385] handle sender defer: 7
+2022-05-10 03:50:11,212 INFO    SenderThread:9411 [file_pusher.py:finish():145] shutting down file pusher
+2022-05-10 03:50:11,311 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:11,311 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:11,415 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:11,415 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:11,520 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:11,520 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:11,626 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:11,626 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:11,732 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:11,732 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:11,834 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:11,835 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:11,940 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:11,940 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:12,042 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:12,043 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:12,149 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:12,149 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:12,251 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:12,251 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:12,356 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:12,356 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:12,463 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:12,463 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:12,566 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:12,566 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:12,670 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:12,671 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:12,774 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:12,774 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:12,877 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:12,878 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:12,982 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:12,983 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:13,085 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:13,085 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:13,188 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:13,188 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:13,284 INFO    Thread-19 :9411 [upload_job.py:push():132] Uploaded file /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/config.yaml
+2022-05-10 03:50:13,292 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:13,293 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:13,398 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:13,399 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:13,408 INFO    Thread-18 :9411 [upload_job.py:push():132] Uploaded file /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/output.log
+2022-05-10 03:50:13,436 INFO    Thread-17 :9411 [upload_job.py:push():132] Uploaded file /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/requirements.txt
+2022-05-10 03:50:13,440 INFO    Thread-20 :9411 [upload_job.py:push():132] Uploaded file /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/wandb-summary.json
+2022-05-10 03:50:13,501 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:13,502 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:13,607 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:13,607 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:13,709 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:13,710 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:13,815 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:13,816 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:13,919 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:13,920 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:14,024 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:14,024 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:14,129 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:14,129 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:14,234 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:14,234 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:14,337 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:14,337 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:14,440 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:14,440 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:14,547 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:14,547 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:14,651 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: poll_exit
+2022-05-10 03:50:14,651 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: poll_exit
+2022-05-10 03:50:16,738 INFO    Thread-21 :9411 [upload_job.py:push():132] Uploaded file /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/files/conda-environment.yaml
+2022-05-10 03:50:16,941 INFO    Thread-6  :9411 [sender.py:transition_state():389] send defer: 8
+2022-05-10 03:50:16,941 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 03:50:16,941 INFO    HandlerThread:9411 [handler.py:handle_request_defer():164] handle defer: 8
+2022-05-10 03:50:16,942 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: defer
+2022-05-10 03:50:16,942 INFO    SenderThread:9411 [sender.py:send_request_defer():385] handle sender defer: 8
+2022-05-10 03:50:17,501 INFO    SenderThread:9411 [sender.py:transition_state():389] send defer: 9
+2022-05-10 03:50:17,501 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 03:50:17,501 INFO    HandlerThread:9411 [handler.py:handle_request_defer():164] handle defer: 9
+2022-05-10 03:50:17,502 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: defer
+2022-05-10 03:50:17,502 INFO    SenderThread:9411 [sender.py:send_request_defer():385] handle sender defer: 9
+2022-05-10 03:50:17,502 INFO    SenderThread:9411 [sender.py:transition_state():389] send defer: 10
+2022-05-10 03:50:17,503 DEBUG   HandlerThread:9411 [handler.py:handle_request():141] handle_request: defer
+2022-05-10 03:50:17,503 DEBUG   SenderThread:9411 [sender.py:send():232] send: final
+2022-05-10 03:50:17,503 INFO    HandlerThread:9411 [handler.py:handle_request_defer():164] handle defer: 10
+2022-05-10 03:50:17,503 DEBUG   SenderThread:9411 [sender.py:send():232] send: footer
+2022-05-10 03:50:17,503 DEBUG   SenderThread:9411 [sender.py:send_request():246] send_request: defer
+2022-05-10 03:50:17,503 INFO    SenderThread:9411 [sender.py:send_request_defer():385] handle sender defer: 10
+2022-05-10 17:43:19,496 WARNING MainThread:9411 [internal.py:is_dead():387] Internal process exiting, parent pid 8927 disappeared
+2022-05-10 17:43:19,498 ERROR   MainThread:9411 [internal.py:wandb_internal():149] Internal process shutdown.
+2022-05-10 17:43:19,499 INFO    SenderThread:9411 [sender.py:finish():1110] shutting down sender
+2022-05-10 17:43:19,499 INFO    SenderThread:9411 [file_pusher.py:finish():145] shutting down file pusher
+2022-05-10 17:43:19,500 INFO    SenderThread:9411 [file_pusher.py:join():150] waiting for file pusher
+2022-05-10 17:43:19,859 INFO    HandlerThread:9411 [handler.py:finish():806] shutting down handler
+2022-05-10 17:43:20,501 INFO    WriterThread:9411 [datastore.py:close():279] close: /Users/ishaan/College/Spring 2022/Codec/codec-capstone/DCVC_vbr/DCVC-Old/wandb/run-20220510_033841-198yj745/run-198yj745.wandb
+2022-05-10 17:43:20,504 INFO    MainThread:9411 [internal.py:handle_exit():80] Internal process exited
