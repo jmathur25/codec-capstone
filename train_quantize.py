@@ -1,4 +1,4 @@
-from src.models.DCVC_net import DCVC_net
+from src.models.DCVC_net_quantize import DCVC_net
 import torch
 from torchvision import transforms
 import numpy as np
@@ -17,16 +17,6 @@ DEVICE = torch.device('cuda')
 
 
 video_net = DCVC_net()
-
-# Freeze parameters
-for p in video_net.mvEncoder.parameters():
-    p.requires_grad = False
-for p in video_net.contextualEncoder.parameters():
-    p.requires_grad = False
-for p in video_net.priorEncoder.parameters():
-    p.requires_grad = False
-for p in video_net.mvpriorEncoder.parameters():
-    p.requires_grad = False
 
 chpt = torch.load('/home/pzy2/model_dcvc_quality_3_psnr.pth')
 video_net.load_state_dict(chpt, strict=False)
@@ -145,7 +135,7 @@ def train_epoch(model, epoch, dl, optimizer, criterion, use_lambda=True):
         ref1 = x[:,0]
         #ref2 = x[:,1]
         im = x[:,1]
-        preds_dict = model(ref1, im, compress=True)
+        preds_dict = model(ref1, im, compress_type='train_compress')
         preds = preds_dict['recon_image']
         bpp = preds_dict['bpp']
         mse_loss = criterion(preds, im)
