@@ -779,14 +779,10 @@ class DCVC_net(nn.Module):
             # quant_mv2 = self.train_quantize(mvfeature2)
             quant_mv = self.train_quantize(mvfeature)
         elif compress_type == "full":
-            z_mv1 = self.mvpriorEncoder(mvfeature1)
-            z_mv2 = self.mvpriorEncoder(mvfeature2)
-            compressed_z_mv1 = torch.round(z_mv1)
-            compressed_z_mv2 = torch.round(z_mv2)
-            params_mv1 = self.mvpriorDecoder(compressed_z_mv1)
-            params_mv2 = self.mvpriorDecoder(compressed_z_mv2)
-            quant_mv1 = torch.round(mvfeature1)
-            quant_mv2 = torch.round(mvfeature2)
+            z_mv = self.mvpriorEncoder(mvfeature)
+            compressed_z_mv = torch.round(z_mv)
+            params_mv = self.mvpriorDecoder(compressed_z_mv)
+            quant_mv = torch.round(mvfeature)
         else:
             raise ValueError("Unknown compress type", compress_type)
 
